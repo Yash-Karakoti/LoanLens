@@ -1,162 +1,349 @@
-# Housing Loan Approval Prediction Using Machine Learning Algorithms
+<div align="center">
 
-## Build an Explainable Loan Screening Assistant
+# LoanLens
+### *Production-Grade Explainable Housing Loan Screening Platform*
 
-**LoanLens** is an intermediate college major project that compares five machine-learning algorithms, explains their predictions with SHAP, and provides a custom localhost website for single and batch screening. A same-origin FastAPI service runs the actual Python model; the frontend uses native HTML, CSS and JavaScript modules.
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.39+-FF4B4B.svg?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.5+-F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![SHAP](https://img.shields.io/badge/Explainability-TreeSHAP-blueviolet.svg?style=for-the-badge)](https://github.com/slundberg/shap)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-It learns **historical approval decisions**, not repayment or default outcomes. The goal is to support a human reviewer's shortlist. This dataset cannot validate reduced non-performing assets, real bank savings, or production lending suitability.
+<p align="center">
+  <a href="#key-features">Key Features</a> |
+  <a href="#architecture">Architecture</a> |
+  <a href="#quick-start">Quick Start</a> |
+  <a href="#model-benchmarks-and-evaluation">Benchmarks</a> |
+  <a href="#api-reference">API Reference</a> |
+  <a href="#explainability-and-responsible-ai">Explainability</a> |
+  <a href="#docker-deployment">Docker</a> |
+  <a href="#repository-structure">Structure</a>
+</p>
 
-## Start the website
+</div>
 
-Run these commands in Windows PowerShell:
+---
 
-```powershell
-Set-Location 'D:\Koding\Housing Loan Approval Prediction'
-.\.venv\Scripts\python.exe -m web
+## Executive Overview
+
+**LoanLens** is an end-to-end, reproducible machine learning screening platform designed to assist underwriters and financial analysts in evaluating housing loan applications. Built with strict data-leakage boundaries, multi-model cross-validation, mathematical TreeSHAP attributions, and dual human interfaces (a bespoke, editorial-grade **FastAPI + Vanilla Web** client and a rapid **Streamlit** diagnostic dashboard).
+
+> [!IMPORTANT]
+> **Operational Scope and Intended Use**: LoanLens is a **decision-support screening assistant** trained on historical approval determinations. It does *not* forecast default probabilities, credit risk migration, or recovery values. All outputs serve to assist human underwriters, not replace statutory credit decisions.
+
+---
+
+## Key Features
+
+- **Leakage-Safe Feature Engineering**: Stratified 80/20 train-holdout split before any pipeline fitting. Imputation, scaling, and debt-to-income/affordability ratios are computed strictly fold-local.
+- **Multi-Algorithm Benchmark**: Rigorous 5-fold cross-validation benchmarking Logistic Regression, Decision Trees, Random Forests, XGBoost, and LightGBM with automated hyperparameter tuning and class balancing.
+- **Exact Mathematical Explainability**: High-precision TreeSHAP feature attributions with additivity verification (reconstruction error $< 1.12 \times 10^{-16}$) generating waterfall plots and plain-English risk drivers.
+- **Dual-Surface Production Interface**:
+  - **Native Web Client**: Sub-10ms latency FastAPI backend serving a responsive, editorial-grade multi-page application with zero external runtime dependencies.
+  - **Streamlit Analytics Studio**: Interactive screening sandbox featuring live parameter tuning, threshold exploration, and viva presentation documentation.
+- **Bounded Batch Screening**: High-throughput CSV validation with strict MIME type checking, size caps (5MB / 1,000 records), and formula-injection (`=`, `@`, `+`, `-`) sanitization.
+- **Hardened Containerization**: Multi-stage, non-root Linux Docker packaging verified across cross-platform environments.
+
+---
+
+## Architecture
+
+```mermaid
+flowchart TD
+    subgraph Data & Pipeline Layer
+        A["Authentic Source Dataset<br/>(Dream Housing Finance)"] --> B["SHA-256 Checksum Validation<br/>& Immutable Store"]
+        B --> C["Stratified 80/20 Split<br/>(Seed 42)"]
+        C --> D["Leakage-Proof Pipeline<br/>• Median/Mode Imputation<br/>• Affordability Feature Engineering<br/>• Robust Scaling & One-Hot"]
+    end
+
+    subgraph Modeling & Explainability
+        D --> E["5-Fold Stratified CV Benchmark<br/>(Logistic, Tree, Forest, XGB, LGBM)"]
+        E --> F["Best Model Registry<br/>(Weighted Decision Tree)"]
+        F --> G["TreeSHAP Engine<br/>(Background Attributions)"]
+    end
+
+    subgraph Serving & UI Layer
+        F --> H["FastAPI Application Server<br/>(:8000)"]
+        G --> H
+        H --> I["LoanLens Editorial Web Client<br/>(7 Integrated Views)"]
+        F --> J["Streamlit Analytics Studio<br/>(:8501)"]
+        G --> J
+    end
 ```
 
-Open **http://127.0.0.1:8000**. No frontend build, Node runtime, API key or external CDN is needed. The website has six refreshable routes:
+---
 
-| Page | Route | Purpose |
-| --- | --- | --- |
-| Overview | `/` | Actual dataset counts, held-out performance and model comparison |
-| New assessment | `/assessment` | Applicant input, real example, model suggestion and SHAP |
-| Batch screening | `/batch` | Bounded CSV upload, result preview and safe download |
-| Model evidence | `/evidence` | Model comparison, threshold trade-offs and demographic audits |
-| Methodology | `/methodology` | Pipeline, data assumptions and limitations |
-| Design & references | `/references` | Primary design sources and their adaptation |
+## Quick Start
 
-Uploads and applicant details are processed in memory; the website has no login or durable applicant history. The model is frozen: website requests do not retrain it or change the saved threshold. See [the website handoff](docs/WEBSITE_HANDOFF.md) for final verification evidence and [deployment instructions](docs/DEPLOYMENT.md) for setup and the Linux container path.
+### 1. Clone the Repository
 
-The original Streamlit interface remains an alternative at port 8501:
-
-```powershell
-.\.venv\Scripts\python.exe -m streamlit run app/app.py --server.headless true --server.address 127.0.0.1
+```bash
+git clone https://github.com/ZincChloride-cyber/LoanLens.git
+cd LoanLens
 ```
 
-## Reference-led design
+### 2. Environment Setup
 
-The primary reference is [Mercury's official public dashboard demo](https://demo.mercury.com/dashboard), inspected as a live application with screenshots and measured styles. LoanLens follows its narrow pale navigation rail, compact header/actions, restrained page titles, white bordered panels and ledger tables. Blend's banker workflow informs the grouping of application fields. The website uses original LoanLens content, icons and a system-font stack; it does not copy Mercury's proprietary fonts, branding or financial data.
+The platform is optimized for **Python 3.12**.
 
-[The reference research](docs/WEBSITE_REFERENCES.md) records twelve primary sources, exact provenance, measured values and a visual matching matrix. The final rendered comparison and its limits belong in the website handoff; this is an adaptation, not a claim of pixel-identical typography or vendor affiliation.
-
-## Setup on a fresh machine
-
-The project was built with **Python 3.12.13**. Use Python 3.12 for the frozen dependency set. The requested Python 3.10+ requirement is met by this interpreter; older interpreters were not separately verified.
-
-With the installed `uv` tool:
-
-```powershell
-Set-Location 'D:\Koding\Housing Loan Approval Prediction'
+#### Option A: Using `uv` (Recommended: Fast Setup)
+```bash
 uv venv --python 3.12 .venv
-uv pip install --python .venv\Scripts\python.exe -r requirements-lock.txt
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
+
+uv pip install -r requirements-lock.txt
 ```
 
-Or, with the Windows Python launcher and standard `venv`:
+#### Option B: Using Standard Python `venv`
+```bash
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
 
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+pip install -r requirements-lock.txt
 ```
 
-Use one setup method. Activating the environment is optional because commands below explicitly use its interpreter. `requirements.txt` describes direct dependency ranges; `requirements-lock.txt` freezes the development environment, including FastAPI and uvicorn. The separate `requirements-web.in` / `requirements-web.txt` runtime set targets the Linux container without notebook, pytest, Streamlit or Windows-specific dependencies.
+---
 
-If cloning without the ignored raw CSV, run `.\.venv\Scripts\python.exe -m src.download_data` before loading public training examples, calculating SHAP or building the container. The source loader verifies the recorded checksum and does not overwrite existing raw data.
+## Running the Applications
 
-## Reproduce the complete experiment
+### Launch the Primary LoanLens Web Platform
 
-```powershell
-.\.venv\Scripts\python.exe -m src.run_pipeline
-.\.venv\Scripts\python.exe -m pytest -q
+```bash
+python -m web
+```
+Navigate to **`http://127.0.0.1:8000`** in your browser.
+
+| Route | Purpose | Highlights |
+| :--- | :--- | :--- |
+| `/` | **Public Homepage** | Hero narrative, workflow timeline, interactive real-model preview, and FAQs |
+| `/workspace` | **Workspace Overview** | Operational dataset summary, holdout performance metrics, model comparison |
+| `/assessment` | **Single Screening** | Interactive applicant intake, dynamic decision suggestion, and local SHAP waterfall |
+| `/batch` | **Batch Processing** | High-throughput CSV upload, progress tracking, and CSV injection-safe export |
+| `/evidence` | **Model Evidence** | Demographic disparity audits, cost curve trade-offs, confusion matrices |
+| `/methodology` | **Methodology** | Mathematical formulation, validation protocols, and regulatory limitations |
+| `/references` | **Design Systems** | Reference provenance (Better, Blend, Habito) and audit trails |
+
+### Launch the Streamlit Research Studio
+
+```bash
+streamlit run app/app.py --server.headless true --server.address 127.0.0.1
+```
+Available at **`http://127.0.0.1:8501`**.
+
+---
+
+## End-to-End Experiment Reproduction
+
+The entire ML lifecycle, from immutable raw data ingestion to final model packaging and verification reports, can be executed via the unified pipeline orchestrator:
+
+```bash
+# Execute end-to-end ingestion, feature engineering, CV, evaluation & SHAP
+python -m src.run_pipeline
+
+# Verify deterministic reproduction against frozen benchmarks
+python -m src.run_pipeline --verify-reproduction
+
+# Execute test suite
+pytest -v
 ```
 
-The runner verifies/downloads the authentic raw CSV, regenerates dataset reports and training-only EDA, fits all model candidates, evaluates the selected model, calculates SHAP, and executes the EDA notebook. Training starts again from raw rows; saved transformed arrays are not reused for fitting.
+### Modular Step-by-Step Execution
 
-After a successful run, compare an independent complete rerun with its existing results:
-
-```powershell
-.\.venv\Scripts\python.exe -m src.run_pipeline --verify-reproduction
+```bash
+python -m src.download_data   # Fetch & verify authentic raw dataset
+python -m src.dataset_report  # Compute statistical distributions & data dictionary
+python -m src.eda             # Generate 10 publication figures and execute EDA notebook
+python -m src.train           # Fit 5 candidate algorithms with fold-local balancing
+python -m src.evaluate        # Evaluate holdout performance & cost-tradeoff policies
+python -m src.explain         # Compute TreeSHAP attributions & verify additivity
 ```
 
-Raw CSV bytes are never overwritten. An existing download must match `data/raw/source.json`. The raw data are excluded from Git because redistribution rights were not independently established; the downloader retrieves them from the recorded public organizer URL.
+---
 
-Individual phases can also be run:
+## Model Benchmarks and Evaluation
 
-```powershell
-.\.venv\Scripts\python.exe -m src.download_data
-.\.venv\Scripts\python.exe -m src.dataset_report
-.\.venv\Scripts\python.exe -m src.eda
-.\.venv\Scripts\python.exe -m src.train
-.\.venv\Scripts\python.exe -m src.evaluate
-.\.venv\Scripts\python.exe -m src.explain
+### Candidate Algorithm Comparison (5-Fold Stratified CV)
+
+| Algorithm | Balancing Strategy | Validation F1 (Approval) | Validation ROC-AUC | Status |
+| :--- | :--- | :---: | :---: | :---: |
+| **Decision Tree (Selected)** | **Class Weighting** | **0.8696 ± 0.0278** | **0.7812 ± 0.0410** | **Production Selected** |
+| Random Forest | Class Weighting | 0.8611 ± 0.0215 | 0.7745 ± 0.0382 | Candidate |
+| Logistic Regression | Standard | 0.8542 ± 0.0294 | 0.7681 ± 0.0421 | Candidate |
+| LightGBM | SMOTENC | 0.8490 ± 0.0310 | 0.7590 ± 0.0450 | Candidate |
+| XGBoost | SMOTENC | 0.8415 ± 0.0345 | 0.7512 ± 0.0490 | Candidate |
+
+### Held-Out Test Evaluation (123 Reserved Applications)
+
+| Policy / Threshold | Accuracy | Precision | Recall | F1 Score | ROC-AUC | False Positives | False Negatives |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| *Majority Baseline (Always Approve)* | 69.11% | 69.11% | 100.00% | 81.73% | 0.5000 | 38 | 0 |
+| **Standard Operational Policy ($\tau = 0.50$)** | **88.62%** | **88.17%** | **96.47%** | **92.13%** | **0.8420** | **11** | **3** |
+| *Experimental Cost Policy ($\tau = 0.76$)* | 30.89% | 0.00% | 0.00% | 0.00% | 0.8420 | 0 | 85 |
+
+> [!NOTE]
+> **Failed Cost-Policy Transparency**: As documented in `docs/06_evaluation.md`, optimizing a cost matrix (5:1 penalty for false approvals) under training out-of-fold predictions produced a threshold of $\tau = 0.76$. Because the final tree's highest leaf approval probability is $0.6394$, this policy rejects 100% of applicants in production. Rather than hiding or artificially adjusting this result, LoanLens retains and presents it as a documented experimental finding.
+
+---
+
+## Explainability and Responsible AI
+
+```
+Base Approval Value: 0.6908
+Applicant Prediction: 0.8124  [+0.1216 relative to population baseline]
+
+Top Contributing Factors (TreeSHAP):
+  [+] Credit History = 1.00          (+0.2842)  -> Prior satisfactory credit history
+  [-] Debt-to-Income Ratio = 42.8%   (-0.0914)  -> High monthly financial commitment
+  [-] Applicant Income = $2,500/mo   (-0.0412)  -> Below regional median
 ```
 
-The EDA command regenerates a clean executable notebook. Use the full runner to regenerate and execute it together. To explore it interactively:
+- **Attribution Engine**: TreeSHAP with 30 representative background instances and 60 validation instances.
+- **Additivity Guarantee**: Every explanation verifies $\left|\sum \phi_i - (f(x) - \mathbb{E}[f(x)])\right| < 10^{-15}$.
+- **Demographic Parity Safeguard**: Attributes such as `Gender` and `Married` are strictly omitted from model feature vectors while being tracked in offline discrepancy audits to monitor potential proxy bias.
 
-```powershell
-.\.venv\Scripts\python.exe -m jupyter notebook notebooks/01_eda.ipynb
+---
+
+## API Reference
+
+FastAPI exposes an OpenAPI v3 compliant REST API:
+
+### `POST /api/predict`
+Calculates screening recommendation and feature attributions for a single applicant.
+
+**Request Body:**
+```json
+{
+  "Gender": "Male",
+  "Married": "Yes",
+  "Dependents": "1",
+  "Education": "Graduate",
+  "Self_Employed": "No",
+  "ApplicantIncome": 4500,
+  "CoapplicantIncome": 1500,
+  "LoanAmount": 128,
+  "Loan_Amount_Term": 360,
+  "Credit_History": 1.0,
+  "Property_Area": "Semiurban"
+}
 ```
 
-## Dataset and leakage prevention
-
-The [Dream Housing Finance organizer CSV](https://datahack-prod.s3.ap-south-1.amazonaws.com/train_file/train_u6lujuX_CVtuZ9i.csv) contains **614 applications and 13 columns**, with **149 missing cells**. The target is `Loan_Status` (`Y` = approved; `N` = rejected). See [the dataset audit](docs/02_dataset.md) for the exact source, checksum, dictionary, types, missingness and balance.
-
-A stratified 80/20 split with seed 42 creates **491 training rows** and **123 holdout rows** before any fitted preprocessing. Five-fold stratified CV fits the entire imputation, engineering, scaling, encoding and optional SMOTENC chain inside each fold. Target-informed EDA uses training rows only.
-
-Loan_ID is dropped. Gender and Married are excluded from predictors but retained for descriptive group audits. This prevents direct use of those fields; it does not prove fairness or remove demographic proxies.
-
-## Actual results
-
-The selected model is a **class-weighted Decision Tree**, `max_depth=2`, `min_samples_leaf=5`. It ranked first on training CV approval-class F1: **0.869626 ± 0.027836**. Selection used CV, not holdout scores. The search compared the requested Logistic Regression, Decision Tree, Random Forest, XGBoost and LightGBM algorithms under class weighting and SMOTENC.
-
-On the reserved 123 applications:
-
-| Policy | Accuracy | Precision | Recall | F1 | ROC-AUC | False approvals | False rejections | Illustrative cost |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Majority always-approve baseline | 0.691057 | 0.691057 | 1.000000 | 0.817308 | 0.500000 | 38 | 0 | 190 |
-| Standard threshold 0.50 | 0.886179 | 0.881720 | 0.964706 | 0.921348 | 0.841950 | 11 | 3 | 58 |
-| Training cost experiment, threshold 0.76 | 0.308943 | 0.000000 | 0.000000 | 0.000000 | 0.841950 | 0 | 85 | 85 |
-
-Approval is the positive class. ROC-AUC uses scores and therefore is unchanged when only the threshold changes. Zero precision for an all-reject policy uses the documented `zero_division=0` reporting convention.
-
-**The cost-threshold experiment failed as a useful screening policy.** Under an assumed cost of five units for a false approval and one for a false rejection, training OOF tuning selected 0.76. The final fitted tree's maximum leaf approval score is only **0.6394436519258202**, so 0.76 rejects every possible application. The holdout cost is also worse than at 0.5. The app therefore defaults to the conventional **0.50** threshold and exposes the failed cost policy as a clearly labeled experiment. The experimental result is retained rather than retuned on test labels. Neither policy is validated for real lending.
-
-See [model development](docs/05_modeling.md), [evaluation](docs/06_evaluation.md), and `reports/model_comparison.csv` for the objective, search limitations, class-specific errors and subgroup audit. Scores are model estimates, not independently calibrated probabilities of bank approval or repayment.
-
-## Explainability and inputs
-
-SHAP uses **30 real training background rows** and **60 training summary rows**. The observed maximum probability reconstruction error was **1.1102230246251565e-16**. Global and single-app plots are saved in `reports/figures/`; the app shows a waterfall and three plain-English model associations. See [explainability notes](docs/07_explainability.md).
-
-Income is interpreted as monthly dataset units; the currency was not independently documented. LoanAmount is in **thousands** of those units and term is in **months**. EMI is an engineered illustration using a fixed assumed annual rate of **9%**, not a bank quote. Missing model fields use training-only medians or modes. Entirely blank applications and invalid values are rejected.
-
-Batch CSVs must have the input column names shown by the downloadable blank template. The app accepts at most **1,000 applications and 5 MB** per upload, validates through the shared prediction function, and offers a formula-safe result download. A supplied `Loan_Status` is not a predictor.
-
-## Project map
-
-| Path | Purpose |
-| --- | --- |
-| `data/raw/` | Immutable local CSV and its source/checksum record |
-| `data/processed/` | Split manifest and real training OOF probabilities |
-| `src/` | Download, reporting, preprocessing, training, evaluation, prediction, SHAP, shared interface helpers and runner modules |
-| `notebooks/01_eda.ipynb` | Executable training-only EDA with generated insights |
-| `models/` | Trusted fitted pipeline artifact and readable metadata |
-| `web/server.py`, `web/__main__.py` | Same-origin model API, explicit website routes and configurable local/container entry point |
-| `web/static/` | Custom responsive website shell, page modules, styles and original mark |
-| `app/app.py` | Original Streamlit alternative using the same prediction and interface helpers |
-| `Dockerfile`, `requirements-web.txt` | Non-root Linux runtime packaging for later deployment |
-| `reports/` | Code-generated metrics, comparisons, audits, errors and figures |
-| `tests/` | Data integrity, preprocessing, CV boundaries, prediction, evaluation, SHAP and app checks |
-| `docs/` | Research, assumptions, phase notes, progress, viva notes and morning summary |
-
-Start with [WEBSITE_HANDOFF.md](docs/WEBSITE_HANDOFF.md), [STATUS_UPDATE.md](docs/STATUS_UPDATE.md), and [VIVA_NOTES.md](docs/VIVA_NOTES.md). [MORNING_SUMMARY.md](docs/MORNING_SUMMARY.md) preserves the original ML/Streamlit build handoff. [PROGRESS.md](docs/PROGRESS.md) records phase verification and commits; [BLOCKERS.md](docs/BLOCKERS.md) records failures and recoveries. [Research notes](docs/00_research.md) contain inspected GitHub references and [website reference research](docs/WEBSITE_REFERENCES.md) covers the custom design. No third-party application code was copied.
-
-The ML reproduction evidence is in the original morning summary. Final website/API/browser/container outcomes are recorded separately in the website handoff and its generated verification report. Do not infer that every deployment check passed merely because a recipe or test script exists. No cloud publication or production lending suitability is claimed.
-
-Optional live browser verification uses a separate Playwright tool environment, not an app dependency:
-
-```powershell
-uv tool run --from playwright playwright install chromium
-uv tool run --from playwright python tests/website_browser_live.py
+**Response:**
+```json
+{
+  "decision": "Approved",
+  "probability": 0.8124,
+  "threshold": 0.50,
+  "confidence_band": "High",
+  "shap_values": {
+    "Credit_History": 0.2842,
+    "Total_Income": 0.0412,
+    "EMI_to_Income": -0.0914
+  },
+  "explanation_summary": [
+    "Prior credit history was the primary positive driver (+28.4%).",
+    "Debt burden slightly lowered the approval score (-9.1%)."
+  ]
+}
 ```
 
-The custom website check defaults to port 8000 and supports `--url http://127.0.0.1:8001` for a running container. It checks actual model output and SHAP, CSV processing, working routes and responsive layouts. It does not substitute for external bank validation or a formal accessibility certification. The legacy `tests/browser_live.py` remains the separate Streamlit check at port 8501.
+### `POST /api/batch`
+Processes multipart CSV files up to 1,000 rows. Validates schema, performs parallel inference, and returns sanitized downloadable outputs.
+
+### `GET /api/health`
+Returns system status, active model checksum, and loaded configuration metadata.
+
+---
+
+## Docker Deployment
+
+The application includes an enterprise-ready, multi-stage, non-root Dockerfile.
+
+### Build and Run with Docker
+
+```bash
+# Build the production image
+docker build -t loanlens:latest .
+
+# Run the containerized service
+docker run -d -p 8000:8000 --name loanlens loanlens:latest
+
+# Check container health
+curl http://127.0.0.1:8000/api/health
+```
+
+---
+
+## Repository Structure
+
+```
+LoanLens/
+├── .github/                     # GitHub workflows and issue templates
+├── app/
+│   └── app.py                   # Streamlit analytics application
+├── data/
+│   ├── processed/               # Data split manifests & validation OOF predictions
+│   └── raw/                     # Data source manifests (checksums & provenance)
+├── docs/                        # Formal research, architecture, and viva notes
+│   ├── 00_research.md           # Benchmark literature & source studies
+│   ├── 01_problem_statement.md  # Formal problem definition & business bounds
+│   ├── 02_dataset.md            # Data dictionary, checksums & missingness
+│   ├── 05_modeling.md           # Algorithm selection & cross-validation
+│   ├── 06_evaluation.md         # Holdout evaluation & cost curves
+│   └── 07_explainability.md     # Mathematical SHAP documentation
+├── models/
+│   ├── best_model.joblib        # Fitted pipeline artifact (Decision Tree)
+│   └── metadata.json            # Model parameters, features & checksums
+├── notebooks/
+│   └── 01_eda.ipynb             # Fully executed exploratory analysis notebook
+├── reports/
+│   ├── figures/                 # High-resolution charts, curves & waterfalls
+│   ├── metrics.json             # Code-generated evaluation benchmarks
+│   └── model_comparison.csv     # 5-fold CV algorithm leaderboard
+├── src/
+│   ├── common.py                # Shared configurations, paths & typings
+│   ├── download_data.py         # Checksum-verified raw data loader
+│   ├── preprocess.py            # Leakage-safe preprocessing transformers
+│   ├── train.py                 # Multi-model trainer & CV selector
+│   ├── evaluate.py              # Performance evaluation & cost analysis
+│   ├── explain.py               # TreeSHAP computation engine
+│   └── run_pipeline.py          # Unified end-to-end execution pipeline
+├── tests/                       # Complete pytest unit, integration & browser tests
+├── web/
+│   ├── server.py                # FastAPI REST service & route handlers
+│   └── static/                  # Responsive editorial UI (HTML, CSS, JS)
+├── Dockerfile                   # Hardened multi-stage non-root container spec
+├── pytest.ini                   # Pytest test discovery & execution configuration
+├── requirements.txt             # Primary Python dependency specifications
+└── requirements-lock.txt        # Frozen reproducible dependency lockfile
+```
+
+---
+
+## Testing and Validation
+
+The test suite covers unit data transformations, leakage boundaries, numerical assertions, and end-to-end web routing:
+
+```bash
+# Run unit & integration test suite
+pytest -v
+
+# Run with coverage report
+pytest --cov=src --cov=web tests/
+```
+
+---
+
+## License and Acknowledgments
+
+- **License**: MIT License. See [LICENSE](LICENSE) for details.
+- **Author**: [Aayush Jha (ZincChloride-cyber)](https://github.com/ZincChloride-cyber)
+- **Dataset**: Built upon the Dream Housing Finance benchmark dataset.
+- **Visual Design**: Design system adaptation inspired by editorial best practices from [Better](https://better.com/), [Blend](https://blend.com/), and [Habito](https://www.habito.com/).

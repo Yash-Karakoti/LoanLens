@@ -12,7 +12,7 @@ uv pip install --python .venv\Scripts\python.exe -r requirements-lock.txt
 .\.venv\Scripts\python.exe -m web
 ```
 
-Open **http://127.0.0.1:8000**. The default bind address is loopback. The pages `/assessment`, `/batch`, `/evidence`, `/methodology` and `/references` also support direct navigation and refresh. API documentation is at `/api/docs`; readiness is at `/api/health`.
+Open **http://127.0.0.1:8000** for the public homepage. The default bind address is loopback. The pages `/workspace`, `/assessment`, `/batch`, `/evidence`, `/methodology` and `/references` also support direct navigation and refresh. API documentation is at `/api/docs`; readiness is at `/api/health`. Fonts and the illustrative WebP hero are bundled local assets.
 
 If the raw CSV is absent after cloning, download it before using real examples, explanations or building the image:
 
@@ -43,7 +43,7 @@ The image runs as a non-root user, binds to `0.0.0.0` inside its container, has 
 
 For a hosting service that supplies its listening port, set `PORT` and retain `WEB_HOST=0.0.0.0`. `python -m web` reads both variables. Use the container command as the start command and `/api/health` for health checks. A static-only host cannot run the Python model; the frontend and API should share the same Python/container service unless an explicit separate-origin design is later implemented.
 
-The image is prepared for later deployment; no cloud account, domain, public registry push or hosting subscription is created by this work. The deployment verification actually run is recorded in `WEBSITE_HANDOFF.md` and `reports/website_verification.json`.
+The image is prepared for later deployment; no cloud account, domain, public registry push or hosting subscription is created by this work. The deployment verification actually run is recorded in `HOMEPAGE_HANDOFF.md` and `reports/website_verification.json`. The earlier `WEBSITE_HANDOFF.md` describes the superseded dashboard-only design.
 
 ## Runtime and data boundaries
 

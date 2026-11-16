@@ -1,4 +1,4 @@
-/* Responsive rules preserve the primary reference's quiet workspace hierarchy. */
+/* Responsive workspace rules; the marketing page is scoped in home.css. */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -12,10 +12,7 @@
 @media (min-width: 1600px) {
   .workspace-main {
     padding-top: 44px;
-    max-width: 1216px;
-  }
-  .topbar {
-    padding-right: 48px;
+    max-width: 1280px;
   }
   .dashboard-grid {
     gap: 25px;
@@ -24,9 +21,6 @@
 @media (max-width: 1150px) {
   .workspace-main {
     padding: 30px;
-  }
-  .topbar {
-    padding: 0 28px;
   }
   .assessment-layout {
     grid-template-columns: minmax(0, 1.1fr) minmax(265px, 0.8fr);
@@ -47,31 +41,18 @@
     padding: 16px;
   }
   .stat-top {
-    font-size: 10px;
+    font-size: 12px;
   }
   .stat strong {
-    font-size: 25px;
+    font-size: 29px;
   }
   .reference-links {
     gap: 14px;
   }
 }
 @media (max-width: 960px) {
-  .sidebar {
-    width: 190px;
-  }
-  .topbar,
-  .main-wrap {
-    margin-left: 190px;
-  }
   .workspace-main {
     padding: 28px 24px;
-  }
-  .topbar {
-    padding: 0 22px;
-  }
-  .mode-label {
-    display: none;
   }
   .dashboard-grid,
   .evidence-top {
@@ -135,69 +116,6 @@
   }
 }
 @media (max-width: 700px) {
-  .sidebar {
-    transform: translateX(-100%);
-    width: 236px;
-    transition: transform 0.2s;
-    box-shadow: 12px 0 40px #20212e12;
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  .mobile-close {
-    display: inline-flex;
-    position: absolute;
-    top: 21px;
-    right: 12px;
-    background: none;
-    border: 0;
-    padding: 5px;
-    color: var(--muted);
-  }
-  .sidebar .brand {
-    padding-right: 30px;
-  }
-  .sidebar .brand .badge {
-    display: none;
-  }
-  .drawer-shade.open {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: #20212e3d;
-    z-index: 25;
-    border: 0;
-  }
-  .topbar,
-  .main-wrap {
-    margin-left: 0;
-  }
-  .topbar {
-    height: 57px;
-    padding: 0 18px;
-    justify-content: flex-start;
-    gap: 13px;
-  }
-  .mobile-menu {
-    display: flex;
-    background: none;
-    border: 0;
-    padding: 6px;
-    margin-left: -6px;
-    color: #676d86;
-  }
-  .topbar-actions {
-    margin-left: auto;
-  }
-  .topbar-link {
-    font-size: 11px;
-  }
-  .breadcrumb {
-    font-size: 11px;
-  }
-  .breadcrumb .workspace-word {
-    display: none;
-  }
   .workspace-main {
     padding: 27px 20px 22px;
     gap: 22px;
@@ -207,10 +125,10 @@
     gap: 15px;
   }
   .page-heading h1 {
-    font-size: 25px;
+    font-size: 29px;
   }
   .page-heading p {
-    font-size: 12px;
+    font-size: 14px;
     max-width: 340px;
   }
   .action-row {
@@ -224,8 +142,8 @@
     gap: 7px;
   }
   .button {
-    font-size: 11px;
-    padding: 8px 12px;
+    font-size: 13px;
+    padding: 10px 14px;
   }
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -240,7 +158,7 @@
     border-top: 1px solid var(--line);
   }
   .stat strong {
-    font-size: 27px;
+    font-size: 32px;
   }
   .dashboard-grid {
     gap: 18px;
@@ -262,10 +180,10 @@
     gap: 12px;
   }
   .callout p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .footer {
-    font-size: 10px;
+    font-size: 12px;
     flex-wrap: wrap;
     gap: 8px;
     padding-top: 15px;
@@ -306,7 +224,7 @@
     align-items: flex-start;
   }
   .upload-bottom .button {
-    font-size: 10px;
+    font-size: 12px;
     padding: 9px 10px;
   }
   .batch-stats {
@@ -335,34 +253,22 @@
     padding: 21px;
   }
   .prose {
-    font-size: 12px;
+    font-size: 15px;
   }
   .policy-metrics strong {
-    font-size: 22px;
+    font-size: 27px;
   }
   .panel-heading.wrap {
     align-items: flex-start;
     flex-wrap: wrap;
   }
   .section-intro p {
-    font-size: 11px;
+    font-size: 13px;
   }
 }
 @media (max-width: 380px) {
   .workspace-main {
     padding: 23px 14px;
-  }
-  .topbar {
-    padding: 0 14px;
-  }
-  .topbar-link {
-    font-size: 10px;
-  }
-  .topbar-link .icon {
-    display: none;
-  }
-  .breadcrumb {
-    font-size: 10px;
   }
   .stat {
     padding: 14px;
@@ -388,10 +294,10 @@
     height: 105px;
   }
   .donut-center strong {
-    font-size: 22px;
+    font-size: 27px;
   }
   .donut-legend-row {
-    font-size: 11px;
+    font-size: 13px;
   }
   .upload-bottom {
     flex-wrap: wrap;
@@ -406,8 +312,8 @@
     gap: 6px;
   }
   .button {
-    font-size: 10px;
-    padding: 8px 10px;
+    font-size: 12px;
+    padding: 10px 12px;
   }
   .button .icon {
     width: 13px;

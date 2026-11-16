@@ -9,9 +9,15 @@ import json
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import Page, expect, sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def capture(page: Page, path: Path) -> None:
+    """Capture from the top so sticky elements keep their real page positions."""
+    page.evaluate("window.scrollTo({top: 0, behavior: 'instant'})")
+    page.screenshot(path=str(path), full_page=True)
 
 
 def main() -> None:
@@ -34,14 +40,36 @@ def main() -> None:
         page = browser.new_page(viewport={"width": 1440, "height": 1100}, device_scale_factor=1)
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(base, wait_until="networkidle")
+        expect(page.locator("#home-title")).to_contain_text("screen home loans.")
+        hero = page.locator(".home-hero-image")
+        expect(hero).to_be_visible()
+        assert hero.evaluate("image => image.complete && image.naturalWidth > 0")
+        expect(page.locator("#workspace-navigation")).not_to_be_visible()
+        page.get_by_role("link", name="See how it works", exact=False).click()
+        expect(page).to_have_url(base + "/#how-it-works")
+        expect(page.locator("#how-it-works")).to_be_in_viewport()
+        page.get_by_role("link", name="FAQs", exact=True).first.click()
+        page.get_by_text("Is this an actual lending decision?", exact=True).click()
+        expect(page.locator(".home-faq details").first).to_have_attribute("open", "")
+        page.get_by_role("button", name="Try a real example", exact=True).click()
+        expect(page.locator("#home-demo .decision")).to_contain_text(truth["prediction"], timeout=120000)
+        expect(page.locator("#home-demo")).to_contain_text(example["loan_id"])
+        expect(page.locator("#home-demo .score-row")).to_contain_text(f"{truth['probability']:.1%}")
+        capture(page, figures / f"homepage_example_{tag}.png")
+        page.goto(base, wait_until="networkidle")
+        capture(page, figures / f"homepage_desktop_{tag}.png")
+        page.get_by_role("link", name="Open workspace", exact=False).first.click()
+        expect(page).to_have_url(base + "/workspace")
+        checks.append("homepage hero, internal anchors, FAQ, live real-model example and workspace entry")
         expect(page.get_by_role("heading", name="Screening overview", exact=True)).to_be_visible()
         expect(page.get_by_text("614", exact=True).first).to_be_visible()
         expect(page.get_by_text("88.6%", exact=True).first).to_be_visible()
         expect(page.locator("svg.roc-chart")).to_be_visible()
         design = page.evaluate("""() => {
           const s = selector => getComputedStyle(document.querySelector(selector));
-          return {sidebar_width: document.querySelector('.sidebar').getBoundingClientRect().width,
+          return {sidebar_count: document.querySelectorAll('.sidebar').length,
             title_size: s('h1').fontSize, title_line_height: s('h1').lineHeight,
+            title_font: s('h1').fontFamily,
             primary_color: s('.button.primary').backgroundColor,
             panel_radius: s('.panel').borderRadius, panel_border: s('.panel').borderColor,
             main_background: s('body').backgroundColor,
@@ -49,16 +77,21 @@ def main() -> None:
             content_width: document.querySelector('.workspace-main').getBoundingClientRect().width - parseFloat(s('.workspace-main').paddingLeft) - parseFloat(s('.workspace-main').paddingRight),
             first_panel_width: document.querySelector('.dashboard-grid .panel').getBoundingClientRect().width};
         }""")
-        assert design["sidebar_width"] == 220
-        assert design["title_size"] == "28px" and design["title_line_height"] == "36px"
-        assert design["primary_color"] == "rgb(82, 102, 235)"
-        assert design["panel_radius"] == "12px" and design["active_nav_radius"] == "8px"
-        assert design["main_background"] == "rgb(255, 255, 255)"
-        assert design["content_width"] == 968
-        page.screenshot(path=str(figures / f"website_overview_{tag}.png"), full_page=True)
-        checks.append("reference tokens: 220px rail, 28/36 title, #5266eb action, 12px panels, 8px nav, white canvas")
+        assert design["sidebar_count"] == 0
+        expect(page.locator(".home-header")).to_be_visible()
+        expect(page.locator('.nav-list a[href="/workspace"]')).to_have_attribute("aria-current", "page")
+        assert float(design["title_size"].removesuffix("px")) >= 44
+        assert "Instrument Serif" in design["title_font"]
+        assert design["primary_color"] == "rgb(1, 120, 72)"
+        assert design["panel_radius"] == "22px"
+        assert design["main_background"] == "rgb(255, 253, 250)"
+        assert page.evaluate("parseFloat(getComputedStyle(document.body).fontSize)") >= 16
+        assert page.evaluate("document.fonts.check('16px \"DM Sans\"')")
+        capture(page, figures / f"website_overview_{tag}.png")
+        checks.append("shared public header/footer, no sidebar, editorial titles, pill navigation and forest/ivory surfaces")
         page.get_by_role("link", name="New assessment", exact=True).last.click()
         expect(page).to_have_url(base + "/assessment")
+        capture(page, figures / f"website_assessment_empty_{tag}.png")
         page.get_by_role("button", name="Load real example", exact=True).click()
         expect(page.locator("#example-source")).to_contain_text(example["loan_id"])
         with page.expect_response(lambda response: response.url == base + "/api/predict" and response.request.method == "POST", timeout=120000) as response_info:
@@ -74,7 +107,7 @@ def main() -> None:
         assert image.evaluate("image => image.complete && image.naturalWidth > 0")
         reconstruction = result["explanation"]["base_value"] + sum(item["value"] for item in result["explanation"]["contributions"])
         assert abs(reconstruction - result["probability"]) < 1e-6
-        page.screenshot(path=str(figures / f"website_assessment_{tag}.png"), full_page=True)
+        capture(page, figures / f"website_assessment_{tag}.png")
         checks.append("labeled real training example: rendered score agrees with model API; additive SHAP PNG and reasons")
         page.locator("#policy").select_option("cost")
         expect(page.locator("#policy-warning")).to_contain_text("rejects every applicant")
@@ -126,21 +159,37 @@ def main() -> None:
         page.reload(wait_until="networkidle")
         expect(page.get_by_role("heading", name="Model evidence", exact=True)).to_be_visible()
         checks.append("browser back/forward and direct route refresh preserve working navigation")
-        for width, height in [(320, 850), (390, 844), (768, 1024), (1024, 900), (1440, 1100)]:
+        for width, height in [(320, 850), (390, 844), (577, 970), (768, 1024), (1024, 900), (1440, 1100)]:
             page.set_viewport_size({"width": width, "height": height})
-            for path in ["/", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
+            for path in ["/", "/workspace", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
                 page.goto(base + path, wait_until="networkidle")
                 expect(page.locator("main h1")).to_be_visible()
                 assert not page.evaluate("document.documentElement.scrollWidth > window.innerWidth"), f"Horizontal page overflow: {width}px {path}"
                 screen_checks.append({"width": width, "route": path, "horizontal_overflow": False})
             if width == 390:
-                page.goto(base + "/assessment", wait_until="networkidle")
-                page.get_by_role("button", name="Open navigation", exact=True).click()
-                expect(page.locator("#sidebar")).to_have_attribute("aria-modal", "true")
+                page.goto(base, wait_until="networkidle")
+                capture(page, figures / f"homepage_mobile_{tag}.png")
+                page.get_by_role("button", name="Open main menu", exact=True).click()
+                expect(page.locator("#public-menu")).to_be_visible()
                 page.keyboard.press("Escape")
-                expect(page.get_by_role("button", name="Open navigation", exact=True)).to_be_focused()
-                page.screenshot(path=str(figures / f"website_mobile_{tag}.png"), full_page=True)
-                checks.append("mobile navigation opens as a focus-managed dialog; Escape restores focus")
+                expect(page.get_by_role("button", name="Open main menu", exact=True)).to_be_focused()
+                page.get_by_role("button", name="Open main menu", exact=True).click()
+                page.locator('#public-menu a[href="/#faq"]').click()
+                expect(page).to_have_url(base + "/#faq")
+                expect(page.locator("#public-menu")).not_to_be_visible()
+                checks.append("public mobile menu supports Escape focus return and anchor navigation")
+                page.goto(base + "/assessment", wait_until="networkidle")
+                expect(page.locator("#workspace-navigation")).to_be_visible()
+                page.get_by_role("button", name="Open main menu", exact=True).click()
+                expect(page.locator("#public-menu")).to_be_visible()
+                page.keyboard.press("Escape")
+                expect(page.get_by_role("button", name="Open main menu", exact=True)).to_be_focused()
+                page.locator('.nav-list a[href="/batch"]').click()
+                expect(page).to_have_url(base + "/batch")
+                expect(page.locator('.nav-list a[href="/batch"]')).to_have_attribute("aria-current", "page")
+                page.locator('.nav-list a[href="/assessment"]').click()
+                capture(page, figures / f"website_mobile_{tag}.png")
+                checks.append("inside pages share the accessible public menu; mobile tool navigation keeps active route and full-width layout")
         assert page.evaluate("Object.keys(localStorage).length") == 0
         assert not errors, f"Uncaught JavaScript errors: {errors}"
         browser.close()

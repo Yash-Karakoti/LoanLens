@@ -70,6 +70,48 @@ def check_evidence_focus(page: Page, base: str) -> None:
     expect(page.get_by_role("button", name="Cost experiment 0.76", exact=True)).to_be_focused(timeout=2000)
 
 
+def check_home_without_evidence(page: Page, base: str) -> None:
+    """The introduction and FAQ stay usable while model evidence is unavailable."""
+    page.route("**/api/overview", lambda route: route.abort())
+    page.goto(base, wait_until="networkidle")
+    expect(page.locator("#home-title")).to_be_visible()
+    expect(page.locator("#home-evidence")).to_contain_text("Unavailable")
+    page.get_by_text("Is this an actual lending decision?", exact=True).click()
+    expect(page.locator(".home-faq details").first).to_have_attribute("open", "")
+    expect(page.get_by_role("link", name="Start an assessment", exact=False).first).to_be_visible()
+
+
+def check_home_pending_evidence(page: Page, base: str) -> None:
+    """Late genuine statistics enhance the page without closing an opened FAQ."""
+    pending = []
+    page.route("**/api/overview", lambda route: pending.append(route))
+    page.goto(base, wait_until="domcontentloaded")
+    expect(page.locator("#home-title")).to_be_visible()
+    page.get_by_text("Is this an actual lending decision?", exact=True).click()
+    expect(page.locator(".home-faq details").first).to_have_attribute("open", "")
+    assert pending
+    pending.pop(0).continue_()
+    expect(page.locator("#home-evidence")).to_contain_text("614", timeout=30000)
+    expect(page.locator(".home-faq details").first).to_have_attribute("open", "")
+
+
+def check_home_example_navigation(page: Page, base: str) -> None:
+    """Leaving a pending real example must not populate a fresh homepage visit."""
+    pending = []
+    page.goto(base, wait_until="networkidle")
+    page.route("**/api/example", lambda route: pending.append(route))
+    page.get_by_role("button", name="Try a real example", exact=True).click()
+    expect(page.get_by_role("button", name="Loading the real example", exact=False)).to_be_disabled()
+    assert pending
+    page.get_by_role("link", name="Open workspace", exact=False).first.click()
+    expect(page).to_have_url(base + "/workspace")
+    pending.pop(0).continue_()
+    page.locator('.home-header .home-brand').click()
+    expect(page.locator("#home-title")).to_be_visible()
+    expect(page.get_by_role("button", name="Try a real example", exact=True)).to_be_enabled()
+    expect(page.locator("#home-demo .decision")).to_have_count(0)
+
+
 def main() -> None:
     """Exercise each race independently; report real failures without fake results."""
     parser = argparse.ArgumentParser(description=__doc__)
@@ -84,6 +126,9 @@ def main() -> None:
             ("late_example_reset", lambda page: check_late_example(page, base)),
             ("overlapping_batch_state", lambda page: check_batch_overlap(page, base, example)),
             ("keyboard_evidence_policy_focus", lambda page: check_evidence_focus(page, base)),
+            ("homepage_without_model_evidence", lambda page: check_home_without_evidence(page, base)),
+            ("homepage_pending_evidence_preserves_faq", lambda page: check_home_pending_evidence(page, base)),
+            ("homepage_pending_example_navigation", lambda page: check_home_example_navigation(page, base)),
         ]:
             page = browser.new_page(viewport={"width": 1440, "height": 1100})
             try:

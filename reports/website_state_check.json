@@ -12,6 +12,18 @@
     {
       "name": "keyboard_evidence_policy_focus",
       "passed": true
+    },
+    {
+      "name": "homepage_without_model_evidence",
+      "passed": true
+    },
+    {
+      "name": "homepage_pending_evidence_preserves_faq",
+      "passed": true
+    },
+    {
+      "name": "homepage_pending_example_navigation",
+      "passed": true
     }
   ],
   "responses": "Genuine API responses delayed at the browser boundary; no replacement model data"

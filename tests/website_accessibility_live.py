@@ -20,7 +20,7 @@ def main() -> None:
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page(viewport={"width": 1440, "height": 1100})
-        for path in ["/", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
+        for path in ["/", "/workspace", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
             page.goto("http://127.0.0.1:8000" + path, wait_until="networkidle")
             expect(page.locator("main h1")).to_be_visible()
             page.add_script_tag(path=str(engine))

@@ -23,3 +23,8 @@ The first live Playwright check timed out on a dropdown option selector. Keyboar
 - Added request-body schemas for bounded JSON/CSV API documentation and verified them.
 - Replaced a PowerShell inline collector that failed to parse with a standard Python verification script.
 - Final website suite: 62 passed; four upstream SHAP/Starlette warnings remain visible. No unresolved functional blocker in the checked website scope.
+
+## Homepage revision verification - recovered findings
+- Docker Desktop was stopped when container checks began. Started the installed engine with `docker desktop start`; the updated image built successfully.
+- The uv virtual environment has no pip module. `uv pip check --python .venv/Scripts/python.exe` verified all 144 installed packages are compatible; no environment change was needed.
+- Automated axe testing found an inherited dark footer paragraph with contrast 2.37:1 and 10px type. Explicit light text and 12px type corrected it; all seven routes then reported zero automated violations.

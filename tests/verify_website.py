@@ -45,8 +45,8 @@ def main() -> None:
     accessibility = read_report("website_accessibility.json")
     state = read_report("website_state_check.json")
     assert native["passed"] and container_browser["passed"] and accessibility["passed"] and state["passed"]
-    assert len(native["responsive_checks"]) == len(container_browser["responsive_checks"]) == 30
-    baseline = read_report("website_baseline.json")
+    assert len(native["responsive_checks"]) == len(container_browser["responsive_checks"]) == 42
+    baseline = read_report("homepage_baseline.json")
     assert digest(ROOT / "data/raw/train.csv") == baseline["raw_sha256"]
     assert digest(ROOT / "models/best_model.joblib") == baseline["model_sha256"]
     inspection = json.loads(subprocess.check_output(["docker", "inspect", CONTAINER], text=True))[0]
@@ -58,10 +58,10 @@ def main() -> None:
     assert environment_port == "PORT=8080"
     code = """import hashlib,json,pathlib,platform
 root=pathlib.Path('/app')
-files={str(path.relative_to(root)):hashlib.sha256(path.read_bytes()).hexdigest() for path in (root/'web').rglob('*') if path.is_file() and path.suffix in ['.py','.js','.css','.html','.svg']}
+files={str(path.relative_to(root)):hashlib.sha256(path.read_bytes()).hexdigest() for path in (root/'web').rglob('*') if path.is_file() and path.suffix in ['.py','.js','.css','.html','.svg','.webp','.ttf','.txt','.md']}
 print(json.dumps({'files':files,'raw_sha256':hashlib.sha256((root/'data/raw/train.csv').read_bytes()).hexdigest(),'model_sha256':hashlib.sha256((root/'models/best_model.joblib').read_bytes()).hexdigest(),'python':platform.python_version()}))"""
     image_data = json.loads(subprocess.check_output(["docker", "exec", CONTAINER, "python", "-c", code], text=True))
-    source = {path.relative_to(ROOT).as_posix(): digest(path) for path in (ROOT / "web").rglob("*") if path.is_file() and path.suffix in [".py", ".js", ".css", ".html", ".svg"]}
+    source = {path.relative_to(ROOT).as_posix(): digest(path) for path in (ROOT / "web").rglob("*") if path.is_file() and path.suffix in [".py", ".js", ".css", ".html", ".svg", ".webp", ".ttf", ".txt", ".md"]}
     assert source == image_data["files"], "Container source differs from the verified local website"
     assert image_data["raw_sha256"] == baseline["raw_sha256"]
     assert image_data["model_sha256"] == baseline["model_sha256"]
@@ -82,7 +82,7 @@ print(json.dumps({'files':files,'raw_sha256':hashlib.sha256((root/'data/raw/trai
         "verified_utc": datetime.now(timezone.utc).isoformat(),
     }
     (ROOT / "reports/website_verification.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"passed": True, "tests": tests, "responsive_checks_per_runtime": 30, "axe_violations": report["accessibility"]["violations"], "cross_platform_probability_difference": difference, "container": report["container"]}, indent=2))
+    print(json.dumps({"passed": True, "tests": tests, "responsive_checks_per_runtime": 42, "axe_violations": report["accessibility"]["violations"], "cross_platform_probability_difference": difference, "container": report["container"]}, indent=2))
 
 
 if __name__ == "__main__":

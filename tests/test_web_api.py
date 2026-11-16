@@ -188,7 +188,7 @@ def test_web_routes_without_model(client: TestClient, tmp_path: Path, monkeypatc
     """Declared pages refresh correctly and remain available if training is missing."""
     (tmp_path / "index.html").write_text("<!doctype html><title>Test shell</title>", encoding="utf-8")
     monkeypatch.setattr(server, "STATIC_DIRECTORY", tmp_path)
-    for path in ["/", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
+    for path in ["/", "/workspace", "/assessment", "/batch", "/evidence", "/methodology", "/references"]:
         assert client.get(path).status_code == 200
     assert client.get("/not-a-page").status_code == 404
 

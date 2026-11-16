@@ -3,26 +3,29 @@
   "base_url": "http://127.0.0.1:8001",
   "real_application_id": "LP001535",
   "checks": [
-    "reference tokens: 220px rail, 28/36 title, #5266eb action, 12px panels, 8px nav, white canvas",
+    "homepage hero, internal anchors, FAQ, live real-model example and workspace entry",
+    "shared public header/footer, no sidebar, editorial titles, pill navigation and forest/ivory surfaces",
     "labeled real training example: rendered score agrees with model API; additive SHAP PNG and reasons",
     "cost policy failure is visible; policy changes and invalid submissions clear stale results",
     "actual CSV upload, real result table, blank template and prediction export",
     "duplicate-header CSV rejected with visible error and no stale downloadable result",
     "evidence policy controls render actual default and failed-cost confusion counts",
     "browser back/forward and direct route refresh preserve working navigation",
-    "mobile navigation opens as a focus-managed dialog; Escape restores focus"
+    "public mobile menu supports Escape focus return and anchor navigation",
+    "inside pages share the accessible public menu; mobile tool navigation keeps active route and full-width layout"
   ],
   "design_measurements": {
-    "sidebar_width": 220,
-    "title_size": "28px",
-    "title_line_height": "36px",
-    "primary_color": "rgb(82, 102, 235)",
-    "panel_radius": "12px",
-    "panel_border": "rgba(112, 115, 147, 0.13)",
-    "main_background": "rgb(255, 255, 255)",
-    "active_nav_radius": "8px",
-    "content_width": 968,
-    "first_panel_width": 472
+    "sidebar_count": 0,
+    "title_size": "64px",
+    "title_line_height": "69.12px",
+    "title_font": "\"Instrument Serif\", Georgia, serif",
+    "primary_color": "rgb(1, 120, 72)",
+    "panel_radius": "22px",
+    "panel_border": "rgba(7, 49, 38, 0.15)",
+    "main_background": "rgb(255, 253, 250)",
+    "active_nav_radius": "100px",
+    "content_width": 1280,
+    "first_panel_width": 626
   },
   "responsive_checks": [
     {
@@ -32,6 +35,11 @@
     },
     {
       "width": 320,
+      "route": "/workspace",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
       "route": "/assessment",
       "horizontal_overflow": false
     },
@@ -62,6 +70,11 @@
     },
     {
       "width": 390,
+      "route": "/workspace",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
       "route": "/assessment",
       "horizontal_overflow": false
     },
@@ -82,12 +95,52 @@
     },
     {
       "width": 390,
+      "route": "/references",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/workspace",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 577,
       "route": "/references",
       "horizontal_overflow": false
     },
     {
       "width": 768,
       "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/workspace",
       "horizontal_overflow": false
     },
     {
@@ -118,6 +171,11 @@
     {
       "width": 1024,
       "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/workspace",
       "horizontal_overflow": false
     },
     {
@@ -148,6 +206,11 @@
     {
       "width": 1440,
       "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/workspace",
       "horizontal_overflow": false
     },
     {

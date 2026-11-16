@@ -100,3 +100,38 @@
 - All 15 website source files in the image matched local bytes. Raw/model hashes remained unchanged; native/container score difference was 0.0.
 - Automated axe-core 4.14.0 checked six routes with WCAG 2 A/AA and 2.1 A/AA tags: zero violations. Three asynchronous/focus regression checks passed.
 - Saved combined reports, screenshots, reference board, deployment guide and WEBSITE_HANDOFF. Native localhost site remains on port 8000. Temporary verification container is stopped after evidence collection; no cloud publication performed.
+
+
+## Homepage revision - research and design direction verified
+- User authorized a public homepage and overall UI revision. Inspected seven current primary mortgage/product references, with rendered Better/Blend/Habito measurements and 13 research captures; Upstart/Rocket visual inspection was blocked and is explicitly qualified.
+- Selected forest #073126, ivory #fffdfa and green #017848, a split housing hero, numbered workflow and shared workspace styling. Current scope is in HOMEPAGE_PLAN; the prior dashboard-only Mercury design remains historical.
+- Generated and visually reviewed an original illustrative house asset; WebP delivery is 1122 x 1402 pixels and 357,046 bytes. Exact prompt and provenance are in HERO_ASSET.
+- Recorded immutable raw/model hashes in reports/homepage_baseline.json. Preserved pre-existing user recipes.json without reading or staging it. Research phase ready for commit.
+
+
+## Homepage revision - implementation and native checks verified
+- Added the public root page and moved the operational overview to /workspace. All seven routes share forest/ivory styling and locally licensed fonts; existing prediction and CSV behavior is retained.
+- Homepage includes split hero, real evidence, numbered process, genuine optional training-example inference/SHAP, FAQ, mobile dialog and complete footer. No new runtime dependency was added.
+- Full Python suite passed: 62 tests, zero failed/skipped, four upstream warnings, 26.54 seconds. JavaScript syntax, Python compilation and uv dependency compatibility passed.
+- Native Chromium passed actual homepage and assessment inference, SHAP, CSV template/upload/export, invalid inputs, policy controls and browser history, plus 35 route/viewport checks with no horizontal overflow or uncaught errors.
+- All six delayed-response/keyboard regression cases passed, including model-evidence failure, late statistics preserving FAQ state and navigation cancelling an example.
+- axe-core 4.14.0 found one inherited homepage footer contrast issue. Explicit readable footer text fixed it; rerun across seven routes reports zero automated WCAG-tag violations. Desktop/mobile captures visually reviewed.
+
+
+## Homepage revision - deployment path and handoff verified
+- Rebuilt the Linux amd64 image and ran all browser workflows plus 35 responsive checks against it. Native and container each report zero uncaught browser errors and page overflow; seven-route automated accessibility remains clear.
+- Read-only root, non-root UID 10001, health on PORT 8080 and all 24 matching website source/asset/license files verified. Windows/Linux real-example prediction probability difference is 0.0.
+- Combined verifier exited 0 and recorded unchanged raw/model hashes, 62 passing Python tests, six passing state regressions and the actual container identity in reports/website_verification.json.
+- Updated README, eight-section STATUS_UPDATE, twenty-question VIVA_NOTES, deployment guide and morning-summary pointer. Added current HOMEPAGE_HANDOFF and reference comparison board; explicitly archived the earlier Mercury dashboard comparison and screenshot.
+- Native site remains at http://127.0.0.1:8000. Temporary verification container is removed after evidence collection. No cloud publication or ML refit was performed; unrelated user recipes.json remains unstaged and unchanged.
+
+
+## Inside UI follow-up - matched to the homepage and verified
+- User requested the inside screens match the outer homepage. Removed the sidebar shell/drawer and their obsolete CSS; reused the actual public header, mobile dialog and full footer across every route.
+- Added full-width tool navigation with active-route semantics and a compact mobile grid. All six inside pages use Instrument Serif titles, pill actions, ivory/sage surfaces and the same content width as the homepage.
+- Rebuilt assessment presentation with larger fields, clearer sections, sage policy panel, original housing illustration and forest result header. Existing API/model/SHAP/CSV behavior is preserved.
+- Python suite: 62 passed, zero failed/skipped, four upstream warnings, 24.10 seconds. All six delayed-response/keyboard checks passed. Automated axe-core 4.14.0 reports zero violations on seven routes.
+- Native and rebuilt Linux container each passed 42 route/viewport checks, including the supplied screenshot's 577px width, with zero horizontal overflow or uncaught browser errors. Actual prediction/SHAP, batch export, policy and history flows passed.
+- Combined verifier exited 0: 25 matching website files, UID 10001, read-only root, healthy on PORT 8080, unchanged raw/model hashes and Windows/Linux score difference 0.0. Screenshots reviewed and comparison board/documentation updated.
+- Corrected screenshot capture to scroll instantly to the top before full-page snapshots, preventing sticky header/hidden skip-link capture artifacts. Used the already installed cached Prettier CLI after the unpinned npx shortcut could not resolve a package; no dependency added.
+- Current localhost stays running on port 8000. Temporary verification container is removed after collection; cloud publication and model retraining were not performed. User recipes.json remains untouched and unstaged.

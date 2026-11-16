@@ -24,3 +24,11 @@
 - Use FastAPI with a same-origin, buildless HTML/CSS/JavaScript frontend. A separate React toolchain is unnecessary for these six pages and would make setup and the viva explanation more complex.
 - Mercury's official public interactive demo supplies the primary visual reference. Follow its layout, spacing and surface hierarchy with original LoanLens content and assets. The design is an adaptation, not Mercury affiliation or a claim of pixel-identical proprietary typography.
 - No authentication, durable applicant storage or cloud publication is added. Website input remains in memory. Deployment instructions distinguish a publicly reachable educational demo from real lending use.
+
+## Homepage revision
+
+- The user explicitly requested a homepage and hero, superseding the previous dashboard-only root and its blue Mercury palette. The operational overview moves to `/workspace`; existing screening routes remain available.
+- The new brand adapts Better's verified forest/ivory/green action palette and Blend's split hero hierarchy, with original content and appropriately licensed substitute fonts. No bank affiliation or proprietary font reuse is implied.
+- The architectural hero is an original AI-generated illustration, clearly distinguished from applicant data. All displayed model figures and interactive predictions still use actual reports/API results.
+- Preserve the existing untracked `recipes.json`; it is unrelated user work and is not part of this change.
+- Inside-UI follow-up: interpret "match the outer one" as sharing the actual public header/footer, Instrument Serif titles, pill actions, ivory/sage surfaces and housing visual. Replace the desktop sidebar with full-width tool navigation and a mobile grid. Keep all model inputs, validation, policies and inference semantics unchanged; no new UI plugin is needed.

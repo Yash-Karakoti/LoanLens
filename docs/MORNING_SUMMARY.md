@@ -1,6 +1,6 @@
 # Morning summary — 16 November 2026
 
-> **Website follow-up:** the current primary interface is the custom website at http://127.0.0.1:8000. Read [WEBSITE_HANDOFF.md](WEBSITE_HANDOFF.md) for its reference matching, 62-test verification and tested container path. The material below preserves the original scientific/Streamlit build handoff.
+> **Website follow-up:** the current primary interface is the custom website at http://127.0.0.1:8000, now with a public housing homepage and a workspace at `/workspace`. Read [HOMEPAGE_HANDOFF.md](HOMEPAGE_HANDOFF.md) for the current UI, reference comparison and fresh checks. The material below preserves the original scientific/Streamlit build handoff.
 
 The complete local college project is built in `D:\Koding\Housing Loan Approval Prediction`. All requested phases are implemented. The final training pipeline, notebook, tests and live app workflows were actually run. Results below come from generated reports, not external repository claims.
 

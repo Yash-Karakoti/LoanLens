@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LoanLens homepage reference comparison</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;padding:32px;background:#fffdfa;color:#073126;font:16px/1.6 system-ui,sans-serif}main{max-width:1500px;margin:auto}h1{font-size:32px;margin:0 0 12px}h2{font-size:21px;margin:0 0 8px}p{max-width:85ch}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:28px 0}article{background:#edf2eb;border:1px solid #cbd7cc;border-radius:16px;overflow:hidden}article h2,article p{margin:18px 22px}article p{font-size:14px}.screen{height:610px;overflow:auto;background:white}.screen img{width:100%;height:auto;display:block}a{color:#017848}table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;border:1px solid #cbd7cc;padding:14px;vertical-align:top}caption{text-align:left;font-weight:bold;margin:24px 0 12px}.small{font-size:14px}@media(max-width:850px){body{padding:18px}.pair{grid-template-columns:1fr}.screen{height:auto}table{font-size:13px}th,td{padding:8px}}
+  </style>
+</head>
+<body><main>
+  <h1>Mortgage references, original working website.</h1>
+  <p>LoanLens combines Better's measured forest/ivory palette with Blend's split hero and Habito's numbered explanation. These are actual source and implementation captures. Source claims and customer data are not LoanLens evidence.</p>
+  <div class="pair">
+    <article><h2>Palette reference · Better</h2><p><a href="https://better.com/">Official homepage</a>. Deep forest, ivory, clear navigation and pill actions. Vendor typography and centered AI-chat composition are not copied.</p><div class="screen"><a href="design-references/homepage-better-clean.png"><img src="design-references/homepage-better-clean.png" alt="Actual inspected Better homepage"></a></div></article>
+    <article><h2>Implementation · LoanLens</h2><p><a href="http://127.0.0.1:8000">Working localhost homepage</a>. Original house illustration and educational screening content. Evidence values are loaded from project reports.</p><div class="screen"><a href="../reports/figures/homepage_desktop_native.png"><img src="../reports/figures/homepage_desktop_native.png" alt="Actual LoanLens homepage with original housing hero"></a></div></article>
+  </div>
+  <div class="pair">
+    <article><h2>Composition reference · Blend</h2><p><a href="https://blend.com/">Official homepage</a>. Split copy/visual hero with primary and secondary actions. LoanLens uses its own colors, image and type.</p><div class="screen"><a href="design-references/homepage-blend-clean.png"><img src="design-references/homepage-blend-clean.png" alt="Actual inspected Blend split homepage hero"></a></div></article>
+    <article><h2>Working explanation, not a static mockup</h2><p>The homepage's optional example runs a genuine public training row through the same prediction and SHAP service used by the workspace.</p><div class="screen"><a href="../reports/figures/homepage_example_native.png"><img src="../reports/figures/homepage_example_native.png" alt="Actual LoanLens homepage after loading its real model example"></a></div></article>
+  </div>
+  <div class="pair">
+    <article><h2>Outside · Homepage</h2><p>The public introduction establishes the shared header, forest/ivory palette, editorial type and pill actions.</p><div class="screen"><a href="../reports/figures/homepage_desktop_native.png"><img src="../reports/figures/homepage_desktop_native.png" alt="Actual public LoanLens homepage"></a></div></article>
+    <article><h2>Inside · Assessment</h2><p>The workspace now uses the same header/footer and typography. Full-width tool navigation replaces the sidebar; the form and result surfaces continue the homepage design.</p><div class="screen"><a href="../reports/figures/website_assessment_empty_native.png"><img src="../reports/figures/website_assessment_empty_native.png" alt="Actual redesigned assessment page matching the homepage"></a></div></article>
+  </div>
+  <table><caption>What matches, what is deliberately original</caption><thead><tr><th>Pattern</th><th>Reference</th><th>LoanLens</th></tr></thead><tbody>
+    <tr><td>Forest / ivory / action green</td><td>Better: #073126 / #fffdfa / #017848</td><td>Same tokens, shared with the workspace</td></tr>
+    <tr><td>Hero composition</td><td>Blend: left copy, large right visual, two actions</td><td>Split housing illustration and direct screening CTA</td></tr>
+    <tr><td>Heading typography</td><td>Proprietary Better/Blend sans-serif faces</td><td>OFL DM Sans with editorial Instrument Serif; an original choice</td></tr>
+    <tr><td>Narrative progression</td><td>Habito: approachable journey, numbered explanation</td><td>Enter details, see suggestion, inspect reasons; then FAQ</td></tr>
+    <tr><td>Proof and trust</td><td>Vendor customer and business claims</td><td>Only actual dataset/model evidence; no invented testimonials or bank affiliation</td></tr>
+  </tbody></table>
+  <p class="small">This is a measured adaptation, not a pixel-identical clone. Reference mobile layouts were not separately inspected. LoanLens's own seven routes are tested at six viewport widths. Open the source research in <a href="HOMEPAGE_RESEARCH.md">HOMEPAGE_RESEARCH.md</a> and current checks in <a href="HOMEPAGE_HANDOFF.md">HOMEPAGE_HANDOFF.md</a>.</p>
+</main></body>
+</html>

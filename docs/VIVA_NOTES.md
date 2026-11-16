@@ -69,13 +69,16 @@ During cross-validation, every fitted step is cloned and fitted on each fold's t
 | `web/static/batch.js` | Handles an accessible CSV selection/upload, actual result counts/preview and the safe download returned by the server. It does not create applicant history. |
 | `web/static/evidence.js` | Presents the actual CV comparison, standard-versus-cost results, confusion counts and demographic evidence. It does not select or refit a model from those results. |
 | `web/static/information.js` | Contains the methodology and design/reference pages, keeping explanatory content separate from form logic. |
-| `web/static/styles.css` | Defines the shared reference-led colors, spacing, surfaces, typography, responsive layouts and interaction states. The six pages use one visual system. |
+| `web/static/styles.css` | Defines the shared forest/ivory colors, spacing, surfaces, typography and interaction states. All seven pages use one visual system, with responsive rules in `responsive.css` and homepage rules in `home.css`. |
 | `web/static/mark.svg` | Original LoanLens mark, served locally rather than using a vendor's brand asset. |
-| `tests/website_browser_live.py` | Optional live-browser checks of actual prediction/SHAP, CSV workflows, routes and responsive rendering. It defaults to port 8000 and can target a running container with `--url http://127.0.0.1:8001`. Its existence alone is not a passing result. |
+| `tests/website_browser_live.py` | Optional live-browser checks of the homepage, actual prediction/SHAP, CSV workflows, seven routes and responsive rendering. It defaults to port 8000 and can target a running container with `--url http://127.0.0.1:8001`. Its existence alone is not a passing result. |
+| `web/static/home.js`, `home.css` | Public homepage, hero, numbered workflow, FAQ, mobile menu and optional genuine training example. Evidence loads independently so a service error does not hide the introduction. Route cleanup aborts an unfinished example. |
+| `web/static/workspace.css` | Matches the inside screens to the homepage: shared header/footer, horizontal tool links, mobile tool grid, editorial titles, spacious fields and result styling. The old sidebar shell and drawer code have been removed. |
+| `web/static/fonts/`, `hero-housing.webp` | Locally hosted OFL fonts and an original illustrative housing image. The image represents no applicant property or measured model result. Licenses and provenance are documented. |
 
 The browser sends JSON for one applicant or bounded CSV bytes for a batch. FastAPI validates the request and calls `predict_frame` using a copy of the artifact with the chosen threshold. The standard policy uses 0.50; the original 0.76 threshold stays unchanged in the saved experiment. For a single explanation, the backend calls the same SHAP code and returns real contributions, reasons and an image. Rendering those results in JavaScript does not retrain the model. Applicant inputs are kept in memory; no login, database or durable history is implied.
 
-The frontend uses native browser modules so the project needs no Node build or external CDN to run. Serving the frontend and API from one origin avoids a separate CORS configuration. Mercury's official public demo supplies the primary visual structure; Blend informs input grouping. Original branding and system fonts replace proprietary assets. Measured source details and the final matching assessment are distinct evidence, documented in the reference research and website handoff.
+The frontend uses native browser modules so the project needs no Node build or external CDN to run. Serving the frontend and API from one origin avoids a separate CORS configuration. Better supplies the current forest/ivory reference, Blend the split hero, and Habito the numbered narrative. The earlier Mercury dashboard structure is retained only where it helps workspace navigation. Original branding, illustrative housing artwork and licensed local fonts replace proprietary assets. Measured source details and final implementation choices are distinguished in `HOMEPAGE_RESEARCH.md` and `HOMEPAGE_HANDOFF.md`.
 
 ## Configuration, notebooks and artifacts
 
@@ -132,7 +135,8 @@ Generated logs and cached bytecode are execution aids, not research evidence or 
 | `docs/WEBSITE_PLAN.md` | Custom website scope, architecture and verification contract. |
 | `docs/WEBSITE_REFERENCES.md` | Twelve primary UI references, inspected source captures, measured Mercury values and a matching matrix. |
 | `docs/DEPLOYMENT.md` | Current localhost setup and the Linux container path for later deployment, with runtime/data boundaries. |
-| `docs/WEBSITE_HANDOFF.md` | Latest custom website completion and verification evidence; distinguishes executed checks from remaining limits. |
+| `docs/WEBSITE_HANDOFF.md` | Historical dashboard-only website handoff, superseded by the homepage revision. |
+| `docs/HOMEPAGE_HANDOFF.md`, `HOMEPAGE_RESEARCH.md`, `HERO_ASSET.md` | Current website evidence, inspected mortgage UI references and original image provenance. |
 | `docs/ASSUMPTIONS.md` | Decisions made where source metadata or requirements were ambiguous. |
 | `docs/PROGRESS.md` | Per-phase work and verification history. |
 | `docs/BLOCKERS.md` | Failures, attempted operations and recoveries. |
@@ -250,4 +254,4 @@ Never describe hypothetical form inputs as newly collected bank observations or 
 
 Optional `tests/website_browser_live.py` checks the custom website at port 8000, or a running container supplied through `--url`. The legacy `tests/browser_live.py` checks the original Streamlit interface at port 8501. Both are separate from pytest so the application needs no browser dependency. Final passing counts and unperformed checks belong in the relevant handoff, not in an assumption based on the scripts' presence.
 
-`tests/website_state_live.py` delays genuine API responses to check reset, overlapping-request and keyboard-focus regressions. `tests/website_accessibility_live.py` runs the separately downloaded axe engine on rendered pages. `tests/verify_website.py` combines actual pytest/browser/audit reports, model/raw checksums and the specifically named verification container's runtime/source checks. These are verification tools, not application dependencies or replacement model data. `docs/WEBSITE_COMPARISON.html` displays the actual reference and implemented screenshots side by side.
+`tests/website_state_live.py` delays genuine API responses to check reset, overlapping-request, keyboard-focus and homepage loading/navigation regressions. `tests/website_accessibility_live.py` runs the separately downloaded axe engine on rendered pages. `tests/verify_website.py` combines actual pytest/browser/audit reports, model/raw checksums and the specifically named verification container's runtime/source checks. These are verification tools, not application dependencies or replacement model data. `docs/HOMEPAGE_COMPARISON.html` displays actual reference and implementation captures; `docs/WEBSITE_COMPARISON.html` preserves the earlier dashboard design.

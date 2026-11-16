@@ -5,42 +5,49 @@
       "route": "/",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 27,
+      "passed_rules": 22,
+      "manual_review_rules": 1
+    },
+    {
+      "route": "/workspace",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 28,
       "manual_review_rules": 1
     },
     {
       "route": "/assessment",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 24,
+      "passed_rules": 25,
       "manual_review_rules": 1
     },
     {
       "route": "/batch",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 23,
+      "passed_rules": 24,
       "manual_review_rules": 0
     },
     {
       "route": "/evidence",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 24,
+      "passed_rules": 25,
       "manual_review_rules": 0
     },
     {
       "route": "/methodology",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 22,
+      "passed_rules": 23,
       "manual_review_rules": 1
     },
     {
       "route": "/references",
       "engine_version": "4.14.0",
       "violations": [],
-      "passed_rules": 26,
+      "passed_rules": 27,
       "manual_review_rules": 0
     }
   ],

@@ -1,5 +1,7 @@
 # Custom website handoff
 
+> Historical dashboard-only handoff. The homepage, routes and visual identity have since changed. Read [HOMEPAGE_HANDOFF.md](HOMEPAGE_HANDOFF.md) for the current implementation and fresh verification. Measurements and test counts below describe the earlier revision.
+
 The complete custom LoanLens website is running at **http://127.0.0.1:8000**. It is the primary interface now. The original Streamlit app remains an optional alternative; the fitted model, raw data and scientific results are unchanged.
 
 ```powershell

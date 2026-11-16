@@ -13,3 +13,5 @@ docs
 reports/reproduction_before.json
 reports/figures/app_*.png
 reports/figures/website_*.png
+reports/figures/homepage_*.png
+recipes.json

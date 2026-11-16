@@ -280,6 +280,7 @@ def figure(name: str) -> FileResponse:
 
 
 @app.get("/")
+@app.get("/workspace")
 @app.get("/assessment")
 @app.get("/batch")
 @app.get("/evidence")
