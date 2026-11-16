@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+*.pyc
+*.log
+.env
+.kaggle/
+.streamlit/secrets.toml
+reports/reproduction_before.json
+data/raw/*.csv
