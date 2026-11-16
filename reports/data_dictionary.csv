@@ -1,0 +1,14 @@
+column,dtype,description
+Loan_ID,object,Unique application identifier; excluded from predictors.
+Gender,object,"Male/Female; retained for descriptive audit, excluded from predictors."
+Married,object,"Yes/No; retained for descriptive audit, excluded from predictors."
+Dependents,object,"0, 1, 2, or 3+; 3+ becomes numeric 3, a lower bound."
+Education,object,Graduate or Not Graduate.
+Self_Employed,object,Yes/No self-employment indicator.
+ApplicantIncome,int64,Applicant income in dataset monetary units; monthly interpretation assumed.
+CoapplicantIncome,float64,"Co-applicant income, using the same assumed time/unit basis."
+LoanAmount,float64,Requested principal in thousands of dataset monetary units.
+Loan_Amount_Term,float64,Repayment term in months.
+Credit_History,float64,1/0 indicating whether credit history meets guidelines; not a credit score.
+Property_Area,object,"Urban, Semiurban, or Rural."
+Loan_Status,object,Historical approval target: Y = 1; N = 0. Not a default/repayment label.

@@ -1,0 +1,14 @@
+column,missing_count,missing_percent
+Loan_ID,0,0.0
+Gender,13,2.117
+Married,3,0.489
+Dependents,15,2.443
+Education,0,0.0
+Self_Employed,32,5.212
+ApplicantIncome,0,0.0
+CoapplicantIncome,0,0.0
+LoanAmount,22,3.583
+Loan_Amount_Term,14,2.28
+Credit_History,50,8.143
+Property_Area,0,0.0
+Loan_Status,0,0.0

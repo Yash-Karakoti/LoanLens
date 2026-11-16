@@ -1,0 +1,18 @@
+{
+  "total_rows": 614,
+  "raw_columns": 13,
+  "train_rows": 491,
+  "test_rows": 123,
+  "train_approved": 337,
+  "test_approved": 85,
+  "train_rejected": 154,
+  "test_rejected": 38,
+  "seed": 42,
+  "test_fraction": 0.2,
+  "duplicate_rows": 0,
+  "duplicate_loan_ids": 0,
+  "missing_cells": 149,
+  "preprocessed_columns_before_one_hot": 17,
+  "train_nonfinite_after_transform": 0,
+  "test_nonfinite_after_transform": 0
+}

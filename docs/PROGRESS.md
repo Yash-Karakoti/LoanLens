@@ -17,3 +17,9 @@
 - Reviewed comparable source code and primary references; documented leakage findings and UI references in docs/00_research.md.
 - Verified docs avoid claims of measured default reduction or production readiness.
 
+
+## Phase 2 — dataset verified
+- Organizer CSV downloaded: 614 rows, 13 columns, SHA-256 recorded. Raw file excluded from Git because redistribution rights are unverified.
+- Code-generated dictionary, dtypes, 149 missing cells, class balance and disjoint 491/123 split recorded.
+- Dataset report rerun successfully; raw hash checked on load. Integrity tests: 2 passed including tampered temporary copy rejection.
+
