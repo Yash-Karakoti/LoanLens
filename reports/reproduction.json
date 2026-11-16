@@ -1,0 +1,14 @@
+{
+  "matched": true,
+  "tolerance": 1e-12,
+  "max_probability_difference": 0.0,
+  "holdout_rows_compared": 123,
+  "candidates_compared": 10,
+  "checks": [
+    "artifact model/strategy/threshold",
+    "raw SHA-256",
+    "all reported metrics",
+    "all CV numeric values and parameters",
+    "holdout IDs, labels, scores and decisions"
+  ]
+}

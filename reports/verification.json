@@ -1,0 +1,44 @@
+{
+  "tests": 43,
+  "failures_and_errors": 0,
+  "skipped": 0,
+  "test_seconds": 57.717,
+  "pipeline_status": "passed",
+  "pipeline_seconds": 161.128366799996,
+  "notebook_cells": 12,
+  "reproduction": {
+    "matched": true,
+    "tolerance": 1e-12,
+    "max_probability_difference": 0.0,
+    "holdout_rows_compared": 123,
+    "candidates_compared": 10,
+    "checks": [
+      "artifact model/strategy/threshold",
+      "raw SHA-256",
+      "all reported metrics",
+      "all CV numeric values and parameters",
+      "holdout IDs, labels, scores and decisions"
+    ]
+  },
+  "browser": {
+    "passed": true,
+    "checks": [
+      "HTTP 200, title and failed-cost-policy warning",
+      "real applicant score matches saved report; prediction and SHAP render",
+      "real CSV upload, prediction and downloadable result",
+      "evidence tab renders generated metrics",
+      "390px mobile layout without horizontal page overflow"
+    ],
+    "browser_errors": [],
+    "real_application_id": "LP002804",
+    "desktop": [
+      1440,
+      1100
+    ],
+    "mobile": [
+      390,
+      844
+    ]
+  },
+  "raw_hash_unchanged": true
+}

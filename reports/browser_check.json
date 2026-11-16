@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "checks": [
+    "HTTP 200, title and failed-cost-policy warning",
+    "real applicant score matches saved report; prediction and SHAP render",
+    "real CSV upload, prediction and downloadable result",
+    "evidence tab renders generated metrics",
+    "390px mobile layout without horizontal page overflow"
+  ],
+  "browser_errors": [],
+  "real_application_id": "LP002804",
+  "desktop": [
+    1440,
+    1100
+  ],
+  "mobile": [
+    390,
+    844
+  ]
+}

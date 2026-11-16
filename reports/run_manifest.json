@@ -1,0 +1,74 @@
+{
+  "started_utc": "2026-11-15T23:15:56.520904+00:00",
+  "status": "passed",
+  "python_executable": "D:\\Koding\\Housing Loan Approval Prediction\\.venv\\Scripts\\python.exe",
+  "python_version": "3.12.13",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "verify_reproduction": true,
+  "versions": {
+    "pandas": "2.3.3",
+    "numpy": "2.5.5",
+    "scikit-learn": "1.7.2",
+    "imbalanced-learn": "0.14.2",
+    "xgboost": "3.4.1",
+    "lightgbm": "4.7.0",
+    "shap": "0.50.0",
+    "streamlit": "1.67.0",
+    "nbclient": "0.10.4"
+  },
+  "phases": [
+    {
+      "name": "download_data",
+      "status": "passed",
+      "seconds": 0.008831300016026944
+    },
+    {
+      "name": "dataset_report",
+      "status": "passed",
+      "seconds": 0.06277150000096299
+    },
+    {
+      "name": "eda",
+      "status": "passed",
+      "seconds": 9.304061700007878
+    },
+    {
+      "name": "train",
+      "status": "passed",
+      "seconds": 118.22402730002068
+    },
+    {
+      "name": "evaluate",
+      "status": "passed",
+      "seconds": 1.9600192999932915
+    },
+    {
+      "name": "explain",
+      "status": "passed",
+      "seconds": 17.000145400001202
+    },
+    {
+      "name": "notebook",
+      "status": "passed",
+      "seconds": 14.406551799998851
+    }
+  ],
+  "notebook_code_cells_executed": 12,
+  "raw_sha256": "8c2cc67a13279ec746b15f76f14e8503154274ef7f221d2437033b4407c80ca8",
+  "reproduction": {
+    "matched": true,
+    "tolerance": 1e-12,
+    "max_probability_difference": 0.0,
+    "holdout_rows_compared": 123,
+    "candidates_compared": 10,
+    "checks": [
+      "artifact model/strategy/threshold",
+      "raw SHA-256",
+      "all reported metrics",
+      "all CV numeric values and parameters",
+      "holdout IDs, labels, scores and decisions"
+    ]
+  },
+  "seconds": 161.128366799996,
+  "completed_utc": "2026-11-15T23:18:37.662293+00:00"
+}

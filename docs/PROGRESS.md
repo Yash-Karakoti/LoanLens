@@ -55,3 +55,19 @@
 - Probability additivity maximum error: 1.1102230246251565e-16. Both explanation tests passed and global artifacts regenerated in full refit.
 - Encoded-feature/independent-masking limitations and baseline-versus-threshold distinction documented.
 
+
+## Phase 8 — application verified
+- Streamlit launched headless at http://127.0.0.1:8501; health HTTP 200.
+- Eight app tests passed: single prediction and SHAP, policy copy, blank/audit-only rejection, bounded CSVs, duplicate-header rejection and formula-safe headers/cells.
+- Live Chromium checks passed: real application LP002804 score matches saved report, SHAP image, batch upload/download, model evidence, desktop 1440px and mobile 390px without page overflow; zero uncaught JavaScript errors.
+- Built-in browser connection failed three times; Playwright fallback succeeded. No cloud deployment claimed.
+
+
+## Phase 9 — documentation and final reproduction verified
+- README, eight-section STATUS_UPDATE, twenty-question VIVA_NOTES and MORNING_SUMMARY completed with generated real results.
+- Full fresh pipeline process exit 0; final run 161.128366799996 seconds. All ten candidates and 123 holdout scores matched prior results at tolerance 1e-12, maximum score difference 0.0.
+- Executed all twelve notebook code cells without errors. Full pytest process exit 0: 43 passed, zero skipped/failures; final output 57.74 seconds.
+- Live browser process exit 0; health HTTP 200. Dependency compatibility, source compilation and whitespace checks passed.
+- Machine evidence saved in reports/verification.json, reproduction.json, run_manifest.json, pytest_results.xml and browser_check.json.
+- Independent re-review found all five initial findings addressed. External bank validation, formal accessibility audit, cloud publication and a Python-version matrix were outside this local educational build.
+
