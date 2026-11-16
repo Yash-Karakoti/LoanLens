@@ -35,3 +35,10 @@
 - Executed 12 notebook code cells with no cell errors. Non-fatal Windows Jupyter event-loop warning observed.
 - Insights generated from actual training statistics in docs/04_eda.md and the notebook.
 
+
+## Phase 5 — modeling verified
+- All five algorithms completed both class-weight and SMOTENC searches: ten candidates, four parameter settings each, five folds, no failed candidate.
+- Training-only CV selected Decision Tree/class_weight (F1 0.8696259724084484). Saved complete pipeline, version metadata, OOF scores and disjoint IDs.
+- Training OOF cost threshold is 0.76; reject-all behavior retained as failed cost scenario. Conventional 0.50 app policy documented separately.
+- Full fresh refit reproduced all CV results and saved model scores. Training-boundary/threshold checks passed in the full 43-test suite.
+
