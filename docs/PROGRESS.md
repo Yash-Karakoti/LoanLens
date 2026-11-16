@@ -23,3 +23,9 @@
 - Code-generated dictionary, dtypes, 149 missing cells, class balance and disjoint 491/123 split recorded.
 - Dataset report rerun successfully; raw hash checked on load. Integrity tests: 2 passed including tampered temporary copy rejection.
 
+
+## Phase 3 — preprocessing verified
+- Median/mode imputation, feature engineering, scaling and encoding live in the pipeline; demographic audit fields and ID excluded from predictors.
+- Preprocessing and training-boundary checks: 14 passed. Fold estimators' medians were compared to their own training rows for weighting and SMOTENC.
+- Actual before/after missingness and finite arrays saved. Initial nested-pipeline failure and fix recorded in BLOCKERS.md.
+

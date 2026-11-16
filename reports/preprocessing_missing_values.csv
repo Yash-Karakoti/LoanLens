@@ -1,0 +1,10 @@
+column,train_before,train_after,test_before,test_after
+Dependents,8,0,7,0
+ApplicantIncome,0,0,0,0
+CoapplicantIncome,0,0,0,0
+LoanAmount,20,0,2,0
+Loan_Amount_Term,12,0,2,0
+Education,0,0,0,0
+Self_Employed,27,0,5,0
+Credit_History,43,0,7,0
+Property_Area,0,0,0,0
