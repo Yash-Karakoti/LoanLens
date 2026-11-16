@@ -29,3 +29,9 @@
 - Preprocessing and training-boundary checks: 14 passed. Fold estimators' medians were compared to their own training rows for weighting and SMOTENC.
 - Actual before/after missingness and finite arrays saved. Initial nested-pipeline failure and fix recorded in BLOCKERS.md.
 
+
+## Phase 4 — EDA verified
+- Generated ten PNG figures using only 491 training rows; verified zero holdout overlap.
+- Executed 12 notebook code cells with no cell errors. Non-fatal Windows Jupyter event-loop warning observed.
+- Insights generated from actual training statistics in docs/04_eda.md and the notebook.
+
