@@ -1,0 +1,9 @@
+attribute,group,n,error_rate_default,false_approvals_default,false_rejections_default,error_rate_tuned,false_approvals_tuned,false_rejections_tuned
+Credit_History,0.0,22,0.045454545454545456,0,1,0.045454545454545456,0,1
+Credit_History,1.0,94,0.1276595744680851,11,1,0.8191489361702128,0,77
+Credit_History,Missing,7,0.14285714285714285,0,1,1.0,0,7
+Property_Area,Rural,34,0.17647058823529413,5,1,0.6470588235294118,0,22
+Property_Area,Semiurban,49,0.061224489795918366,2,1,0.7346938775510204,0,36
+Property_Area,Urban,40,0.125,4,1,0.675,0,27
+Education,Graduate,100,0.12,9,3,0.71,0,71
+Education,Not Graduate,23,0.08695652173913043,2,0,0.6086956521739131,0,14

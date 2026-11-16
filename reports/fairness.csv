@@ -1,0 +1,6 @@
+attribute,group,n,n_actual_approved,n_actual_rejected,historical_approval_rate,small_group,predicted_approval_rate_default,tpr_default,fpr_default,predicted_approval_rate_tuned,tpr_tuned,fpr_tuned
+Gender,Female,25,14,11,0.56,True,0.56,0.8571428571428571,0.18181818181818182,0.0,0.0,0.0
+Gender,Male,96,70,26,0.7291666666666666,False,0.8125,0.9857142857142858,0.34615384615384615,0.0,0.0,0.0
+Gender,Missing,2,1,1,0.5,True,0.5,1.0,0.0,0.0,0.0,0.0
+Married,No,44,25,19,0.5681818181818182,False,0.6590909090909091,0.92,0.3157894736842105,0.0,0.0,0.0
+Married,Yes,79,60,19,0.759493670886076,False,0.810126582278481,0.9833333333333333,0.2631578947368421,0.0,0.0,0.0

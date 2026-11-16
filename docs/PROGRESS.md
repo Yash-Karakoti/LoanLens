@@ -42,3 +42,10 @@
 - Training OOF cost threshold is 0.76; reject-all behavior retained as failed cost scenario. Conventional 0.50 app policy documented separately.
 - Full fresh refit reproduced all CV results and saved model scores. Training-boundary/threshold checks passed in the full 43-test suite.
 
+
+## Phase 6 — evaluation verified
+- Frozen holdout has 123 rows. At 0.50: accuracy 0.886179, F1 0.921348, ROC-AUC 0.841950; confusion counts 27/11/3/82.
+- Failed 0.76 policy rejects all: 85 false rejections, cost 85 versus 58 at 0.50. No threshold retuning on holdout.
+- Wrote baselines, default/tuned matrices, curves, row/group errors and demographic audits with counts/undefined rates.
+- Five evaluation-focused tests passed; outputs reproduced in full rebuild.
+

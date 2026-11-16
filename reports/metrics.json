@@ -1,0 +1,97 @@
+{
+  "model_name": "Decision Tree",
+  "strategy": "class_weight",
+  "threshold": 0.76,
+  "n_train": 491,
+  "n_test": 123,
+  "train_default": {
+    "accuracy": 0.8065173116089613,
+    "precision": 0.7951219512195122,
+    "recall": 0.9673590504451038,
+    "f1": 0.8728246318607764,
+    "roc_auc": 0.7151527997225327,
+    "average_precision": 0.7938903871515621,
+    "brier_score": 0.17412764146288126,
+    "balanced_accuracy": 0.7109522524952792,
+    "macro_f1": 0.7342846563559201,
+    "rejection_recall": 0.45454545454545453,
+    "false_approvals": 84,
+    "false_rejections": 11,
+    "true_approvals": 326,
+    "true_rejections": 70,
+    "cost": 431
+  },
+  "test_default": {
+    "accuracy": 0.8861788617886179,
+    "precision": 0.8817204301075269,
+    "recall": 0.9647058823529412,
+    "f1": 0.9213483146067416,
+    "roc_auc": 0.8419504643962847,
+    "average_precision": 0.8782999825414114,
+    "brier_score": 0.1442249447155676,
+    "balanced_accuracy": 0.8376160990712074,
+    "macro_f1": 0.8577329808327825,
+    "rejection_recall": 0.7105263157894737,
+    "false_approvals": 11,
+    "false_rejections": 3,
+    "true_approvals": 82,
+    "true_rejections": 27,
+    "cost": 58
+  },
+  "test_tuned": {
+    "accuracy": 0.3089430894308943,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.8419504643962847,
+    "average_precision": 0.8782999825414114,
+    "brier_score": 0.1442249447155676,
+    "balanced_accuracy": 0.5,
+    "macro_f1": 0.2360248447204969,
+    "rejection_recall": 1.0,
+    "false_approvals": 0,
+    "false_rejections": 85,
+    "true_approvals": 0,
+    "true_rejections": 38,
+    "cost": 85
+  },
+  "confusion_matrix": [
+    [
+      27,
+      11
+    ],
+    [
+      3,
+      82
+    ]
+  ],
+  "confusion_matrix_tuned": [
+    [
+      38,
+      0
+    ],
+    [
+      85,
+      0
+    ]
+  ],
+  "majority_baseline": {
+    "accuracy": 0.6910569105691057,
+    "precision": 0.6910569105691057,
+    "recall": 1.0,
+    "f1": 0.8173076923076923,
+    "roc_auc": 0.5,
+    "average_precision": 0.6910569105691057,
+    "brier_score": 0.3089430894308943,
+    "balanced_accuracy": 0.5,
+    "macro_f1": 0.40865384615384615,
+    "rejection_recall": 0.0,
+    "false_approvals": 38,
+    "false_rejections": 0,
+    "true_approvals": 85,
+    "true_rejections": 0,
+    "cost": 190
+  },
+  "accuracy_gap": -0.07966155017965659,
+  "f1_gap": -0.04852368274596519
+}
