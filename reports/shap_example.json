@@ -1,0 +1,12 @@
+{
+  "loan_id": "LP001877",
+  "prediction": "Rejected",
+  "probability": 0.6394436519258202,
+  "threshold": 0.76,
+  "base_value": 0.5052942326429276,
+  "reasons": [
+    "Credit History = meets guidelines indicator (present) increased the model approval score by 11.35 percentage points relative to the training background.",
+    "Loan to Income Ratio (standardized) increased the model approval score by 1.46 percentage points relative to the training background.",
+    "LoanAmount (standardized) increased the model approval score by 0.61 percentage points relative to the training background."
+  ]
+}

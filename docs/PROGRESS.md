@@ -49,3 +49,9 @@
 - Wrote baselines, default/tuned matrices, curves, row/group errors and demographic audits with counts/undefined rates.
 - Five evaluation-focused tests passed; outputs reproduced in full rebuild.
 
+
+## Phase 7 — explainability verified
+- Generated global SHAP from 60 real training rows and 30 training background rows, plus a single-app waterfall and three descriptive reasons.
+- Probability additivity maximum error: 1.1102230246251565e-16. Both explanation tests passed and global artifacts regenerated in full refit.
+- Encoded-feature/independent-masking limitations and baseline-versus-threshold distinction documented.
+

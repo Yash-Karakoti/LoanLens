@@ -1,0 +1,198 @@
+{
+  "method": "PermutationExplainer with Independent masker on final encoded features",
+  "output_space": "positive-class model probability (not calibrated repayment risk)",
+  "background_rows": 30,
+  "summary_rows": 60,
+  "permutations": 5,
+  "seed": 42,
+  "background_train_ids": [
+    "LP001356",
+    "LP001606",
+    "LP001318",
+    "LP002833",
+    "LP002938",
+    "LP001253",
+    "LP002087",
+    "LP001109",
+    "LP002435",
+    "LP001034",
+    "LP001552",
+    "LP002911",
+    "LP002776",
+    "LP001036",
+    "LP002505",
+    "LP002716",
+    "LP001665",
+    "LP001936",
+    "LP002377",
+    "LP002842",
+    "LP002484",
+    "LP002459",
+    "LP002888",
+    "LP002706",
+    "LP001138",
+    "LP001267",
+    "LP001194",
+    "LP002449",
+    "LP002753",
+    "LP002571"
+  ],
+  "summary_train_ids": [
+    "LP001877",
+    "LP002263",
+    "LP002449",
+    "LP001673",
+    "LP001498",
+    "LP002487",
+    "LP002794",
+    "LP001994",
+    "LP002960",
+    "LP002272",
+    "LP001580",
+    "LP002690",
+    "LP001356",
+    "LP002582",
+    "LP001370",
+    "LP002116",
+    "LP002837",
+    "LP002305",
+    "LP001819",
+    "LP002556",
+    "LP001038",
+    "LP002043",
+    "LP001273",
+    "LP001736",
+    "LP001647",
+    "LP002201",
+    "LP002706",
+    "LP001546",
+    "LP001892",
+    "LP001871",
+    "LP002705",
+    "LP001119",
+    "LP001349",
+    "LP002390",
+    "LP001493",
+    "LP002505",
+    "LP002792",
+    "LP002731",
+    "LP001151",
+    "LP001594",
+    "LP001073",
+    "LP001868",
+    "LP001384",
+    "LP001990",
+    "LP001924",
+    "LP002494",
+    "LP001488",
+    "LP002847",
+    "LP001844",
+    "LP002126",
+    "LP001253",
+    "LP001233",
+    "LP001908",
+    "LP002008",
+    "LP001343",
+    "LP001451",
+    "LP001213",
+    "LP002444",
+    "LP001657",
+    "LP001872"
+  ],
+  "max_additivity_error": 1.1102230246251565e-16,
+  "mean_absolute_shap": [
+    {
+      "feature": "Credit History = meets guidelines (indicator)",
+      "value": 0.1694747387708835
+    },
+    {
+      "feature": "Loan to Income Ratio (standardized)",
+      "value": 0.025611409701828357
+    },
+    {
+      "feature": "LoanAmount (standardized)",
+      "value": 0.007574756627367608
+    },
+    {
+      "feature": "Dependents (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "ApplicantIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "CoapplicantIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Loan Amount Term (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "TotalIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "EMI (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Balance Income (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Log ApplicantIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Log CoapplicantIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Log LoanAmount (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Log TotalIncome (standardized)",
+      "value": 0.0
+    },
+    {
+      "feature": "Education = Graduate (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Education = Not Graduate (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Self Employed = No (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Self Employed = Yes (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Credit History = does not meet guidelines (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Property Area = Rural (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Property Area = Semiurban (indicator)",
+      "value": 0.0
+    },
+    {
+      "feature": "Property Area = Urban (indicator)",
+      "value": 0.0
+    }
+  ],
+  "limitations": [
+    "Numeric feature values are standardized; categorical values are one-hot indicators.",
+    "Correlated raw and engineered features share attribution; masking can create unrealistic combinations.",
+    "Approximate model associations are not causal effects, fairness proof or legal adverse-action reasons."
+  ]
+}
