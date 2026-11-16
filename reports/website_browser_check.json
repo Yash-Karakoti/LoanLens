@@ -1,0 +1,180 @@
+{
+  "passed": true,
+  "base_url": "http://127.0.0.1:8000",
+  "real_application_id": "LP001535",
+  "checks": [
+    "reference tokens: 220px rail, 28/36 title, #5266eb action, 12px panels, 8px nav, white canvas",
+    "labeled real training example: rendered score agrees with model API; additive SHAP PNG and reasons",
+    "cost policy failure is visible; policy changes and invalid submissions clear stale results",
+    "actual CSV upload, real result table, blank template and prediction export",
+    "duplicate-header CSV rejected with visible error and no stale downloadable result",
+    "evidence policy controls render actual default and failed-cost confusion counts",
+    "browser back/forward and direct route refresh preserve working navigation",
+    "mobile navigation opens as a focus-managed dialog; Escape restores focus"
+  ],
+  "design_measurements": {
+    "sidebar_width": 220,
+    "title_size": "28px",
+    "title_line_height": "36px",
+    "primary_color": "rgb(82, 102, 235)",
+    "panel_radius": "12px",
+    "panel_border": "rgba(112, 115, 147, 0.13)",
+    "main_background": "rgb(255, 255, 255)",
+    "active_nav_radius": "8px",
+    "content_width": 968,
+    "first_panel_width": 472
+  },
+  "responsive_checks": [
+    {
+      "width": 320,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 320,
+      "route": "/references",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/references",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/references",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/references",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/assessment",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/batch",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/evidence",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/methodology",
+      "horizontal_overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/references",
+      "horizontal_overflow": false
+    }
+  ],
+  "uncaught_javascript_errors": []
+}

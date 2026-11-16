@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LoanLens — reference and implementation</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;padding:32px;background:#f4f5f9;color:#1e1e2a;font:15px/1.6 system-ui,sans-serif}main{max-width:1540px;margin:auto}h1{font-size:28px;font-weight:500;margin:0 0 8px}p{color:#60657a;margin:0 0 24px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:24px}article{background:white;border:1px solid #dcdfe8;border-radius:12px;overflow:hidden}h2{font-size:17px;font-weight:500;margin:0;padding:18px 22px}article p{font-size:12px;margin:0;padding:0 22px 18px}.screen{height:690px;overflow:hidden;border-top:1px solid #e5e7ed}.screen img{display:block;width:100%;height:auto}a{color:#4254d3}table{width:100%;border-collapse:collapse;margin-top:24px;background:white}th,td{padding:12px 18px;border:1px solid #dcdfe8;text-align:left}th{font-weight:500;font-size:13px}td{font-size:13px}.note{margin-top:20px;font-size:13px}@media(max-width:800px){body{padding:18px}.pair{grid-template-columns:1fr}.screen{height:auto}}
+  </style>
+</head>
+<body><main>
+  <h1>Reference studied. Working website built.</h1>
+  <p>The official Mercury dashboard supplies the visual system; LoanLens supplies its own workflows, branding and real model evidence.</p>
+  <div class="pair">
+    <article><h2>Primary reference · Mercury</h2><p><a href="https://demo.mercury.com/dashboard">Official public demo</a>. Vendor demonstration records are reference material, not this project's data.</p><div class="screen"><a href="design-references/mercury-dashboard-clean.png"><img src="design-references/mercury-dashboard-clean.png" alt="Actual inspected Mercury dashboard reference"></a></div></article>
+    <article><h2>Implementation · LoanLens</h2><p><a href="http://127.0.0.1:8000">Working localhost website</a>. Counts, curves and metrics come from the real project reports.</p><div class="screen"><a href="../reports/figures/website_overview_native.png"><img src="../reports/figures/website_overview_native.png" alt="Actual implemented LoanLens dashboard"></a></div></article>
+  </div>
+  <table><thead><tr><th>Measured relationship</th><th>Mercury reference</th><th>LoanLens browser check</th></tr></thead><tbody>
+    <tr><td>Navigation rail</td><td>About 219px</td><td>220px</td></tr>
+    <tr><td>Main content / first panel</td><td>968px / 472px</td><td>968px / 472px at 1440px viewport</td></tr>
+    <tr><td>Page-title size / line height</td><td>28px / 36px</td><td>28px / 36px</td></tr>
+    <tr><td>Primary action</td><td>#5266eb, pill shape</td><td>#5266eb, pill shape</td></tr>
+    <tr><td>Panels / active navigation</td><td>12px / 8px radius</td><td>12px / 8px radius</td></tr>
+    <tr><td>Surface and border</td><td>White, lavender-gray border at alpha 0.10</td><td>White, slightly stronger matching border at alpha 0.13</td></tr>
+  </tbody></table>
+  <p class="note">This is a close visual adaptation, not a pixel-identical clone. LoanLens uses system fonts instead of Mercury's proprietary Arcadia, original icons and branding, and different panel content/heights suited to actual model evidence. Contrast was strengthened where needed. Reference captures remain in research documentation and are not served as the website interface. See <a href="WEBSITE_REFERENCES.md">the source catalogue</a> and <a href="../reports/website_browser_check.json">measured browser results</a>.</p>
+</main></body></html>

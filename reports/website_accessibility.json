@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "route": "/",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 27,
+      "manual_review_rules": 1
+    },
+    {
+      "route": "/assessment",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 24,
+      "manual_review_rules": 1
+    },
+    {
+      "route": "/batch",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 23,
+      "manual_review_rules": 0
+    },
+    {
+      "route": "/evidence",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 24,
+      "manual_review_rules": 0
+    },
+    {
+      "route": "/methodology",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 22,
+      "manual_review_rules": 1
+    },
+    {
+      "route": "/references",
+      "engine_version": "4.14.0",
+      "violations": [],
+      "passed_rules": 26,
+      "manual_review_rules": 0
+    }
+  ],
+  "limit": "Automated axe checks do not replace a formal accessibility or assistive-technology audit."
+}

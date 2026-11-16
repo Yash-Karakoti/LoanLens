@@ -2,14 +2,17 @@
 
 ## A short explanation of the project
 
-"My project learns historical housing-loan approval patterns from the Dream Housing Finance dataset. I compare five classifiers using training-only cross-validation, save the selected complete preprocessing/model pipeline, and explain its approval scores with SHAP. A Streamlit interface supports one application, CSV batches and model evidence. It is an educational screening assistant for human review. Approval labels do not tell us whether borrowers repay, so I cannot claim that the project measures default risk or reduces NPAs."
+"My project learns historical housing-loan approval patterns from the Dream Housing Finance dataset. I compare five classifiers using training-only cross-validation, save the selected complete preprocessing/model pipeline, and explain its approval scores with SHAP. A custom website supports one application, CSV batches and model evidence. Its native HTML/CSS/JavaScript frontend calls the same-origin FastAPI service, which runs the actual Python model. The original Streamlit interface remains an alternative. It is an educational screening assistant for human review. Approval labels do not tell us whether borrowers repay, so I cannot claim that the project measures default risk or reduces NPAs."
 
 The experiment uses 614 real applications. A raw stratified split reserves 123 for final evaluation and uses 491 for development. The selected class-weighted Decision Tree has CV F1 0.869626. On the holdout at conventional 0.5, accuracy is 0.886179, F1 0.921348 and ROC-AUC 0.841950. Present the majority baseline and the failed cost-threshold experiment alongside these results.
 
 ## Follow one application through the code
 
 ```text
-raw application fields
+website form or uploaded CSV
+  -> bounded same-origin API request
+  -> shared prediction function with an explicit policy copy
+  -> raw application fields
   -> validate values and required columns
   -> exclude identifier and demographic audit fields
   -> impute missing numeric/category values using fitted training statistics
@@ -37,9 +40,10 @@ During cross-validation, every fitted step is cloned and fitted on each fold's t
 | `src/train.py` | Searches five algorithms under two imbalance strategies, chooses by CV F1, generates training OOF scores, demonstrates cost tuning and saves the complete winning pipeline. XGBoost's balanced sample weights are calculated inside each fit. |
 | `src/evaluate.py` | Evaluates the already selected model on holdout rows; writes standard/tuned metrics, a majority baseline, actual error rows, subgroup rates and plots. It does not choose a new model from test results. |
 | `src/predict.py` | Loads the trusted project artifact and provides one validation/prediction function for single and batch use. It rejects non-finite scores and rows with no model inputs. |
+| `src/interface.py` | Shares bounded UTF-8 CSV parsing, duplicate-header checks, formula-safe output and the tree's maximum leaf-score calculation between the website and Streamlit. Moving these helpers avoids two interfaces drifting apart. |
 | `src/explain.py` | Explains final encoded approval probabilities with permutation SHAP, uses training-only background rows, checks additivity, and produces readable reasons and figures. |
 | `src/run_pipeline.py` | Runs all phases from raw data, executes the notebook in this interpreter and records phase outcomes. Optional reproduction checking compares a new complete fit with an existing result snapshot. |
-| `app/app.py` | Implements Streamlit input, output, explanation, CSV and model-evidence tabs. Native forms submit inputs together; trusted models are cached, uploads stay in memory, and text exports neutralize spreadsheet formulas. |
+| `app/app.py` | Preserves the original Streamlit input, output, explanation, CSV and model-evidence tabs as an alternative. It imports the shared interface helpers and prediction code rather than maintaining a separate model implementation. |
 | `tests/test_data.py` | Checks the real source hash/shape and verifies that an altered temporary copy is rejected. The real raw file is never edited in a test. |
 | `tests/test_preprocess.py` | Checks missingness, `3+`, feature formulas, invalid inputs, finite transforms and unchanged imputer statistics on holdout transformation. Artificial fixtures test boundaries and are not training observations or reported data. |
 | `tests/test_training.py` | Inspects actual fitted CV fold imputers, checks resampling/prediction behavior, threshold costs and single/batch prediction agreement. |
@@ -47,6 +51,31 @@ During cross-validation, every fitted step is cloned and fitted on each fold's t
 | `tests/test_explain.py` | Checks agreement with prediction, probability reconstruction, three reasons, readable feature labels and training-only background IDs. |
 | `tests/test_app.py` | Uses Streamlit AppTest to exercise the actual form and result; also checks blank submissions, upload limits and formula-safe CSV output. |
 | `tests/test_reproduction.py` | Proves the reproduction comparator rejects changed metrics, thresholds, model parameters, IDs, raw hashes or scores, while allowing only tiny floating-point tolerance. |
+| `tests/test_web_api.py` | Exercises the actual FastAPI service and frozen artifact: policy copies, prediction/SHAP agreement, actual body limits, CSV safety, invalid input, report values, numerical precision and protected file paths. |
+
+## Custom website files and request flow
+
+| File | Plain-English purpose and design choice |
+| --- | --- |
+| `web/__init__.py` | Marks the website backend as a Python package. |
+| `web/__main__.py` | Starts uvicorn with `python -m web`. Localhost is the default; `WEB_HOST` and `PORT` support a container or later host without editing source. Access logging is disabled so submitted application paths are not treated as an audit trail. |
+| `web/server.py` | Serves explicit page routes, static assets and same-origin API endpoints. It bounds received bytes before parsing, validates the policy, calls shared Python inference, serializes actual evidence and only exposes known aggregate figures. The trusted model is cached; SHAP plotting is locked because Matplotlib has global figure state. |
+| `web/static/index.html` | Defines the accessible document shell, viewport, local assets, loading state and no-JavaScript message. It loads JavaScript modules directly; no bundler or frontend runtime server is needed. |
+| `web/static/app.js` | Provides the common navigation shell and client-side router, current-page state, history/back behavior, responsive drawer and initial evidence request. The backend also serves each declared route so a refresh works. |
+| `web/static/components.js` | Small presentation helpers format actual numbers, escape untrusted text, issue API requests, render real chart coordinates/tables and download CSV output. A chart is not an invented decorative trend. |
+| `web/static/overview.js` | Arranges actual dataset counts, held-out metrics, empirical ROC coordinates and model comparison in the reference-led workspace. |
+| `web/static/assessment.js` | Builds grouped native input controls, optional audit fields, the labeled real-example action, loading/errors and model/SHAP results. Only a submitted request calls the model. |
+| `web/static/assessment-result.js` | Renders the real suggestion, approval score, active threshold, missing-field notice, three reasons, signed contribution bars and expandable SHAP waterfall. It separates result presentation from form behavior. |
+| `web/static/batch.js` | Handles an accessible CSV selection/upload, actual result counts/preview and the safe download returned by the server. It does not create applicant history. |
+| `web/static/evidence.js` | Presents the actual CV comparison, standard-versus-cost results, confusion counts and demographic evidence. It does not select or refit a model from those results. |
+| `web/static/information.js` | Contains the methodology and design/reference pages, keeping explanatory content separate from form logic. |
+| `web/static/styles.css` | Defines the shared reference-led colors, spacing, surfaces, typography, responsive layouts and interaction states. The six pages use one visual system. |
+| `web/static/mark.svg` | Original LoanLens mark, served locally rather than using a vendor's brand asset. |
+| `tests/website_browser_live.py` | Optional live-browser checks of actual prediction/SHAP, CSV workflows, routes and responsive rendering. It defaults to port 8000 and can target a running container with `--url http://127.0.0.1:8001`. Its existence alone is not a passing result. |
+
+The browser sends JSON for one applicant or bounded CSV bytes for a batch. FastAPI validates the request and calls `predict_frame` using a copy of the artifact with the chosen threshold. The standard policy uses 0.50; the original 0.76 threshold stays unchanged in the saved experiment. For a single explanation, the backend calls the same SHAP code and returns real contributions, reasons and an image. Rendering those results in JavaScript does not retrain the model. Applicant inputs are kept in memory; no login, database or durable history is implied.
+
+The frontend uses native browser modules so the project needs no Node build or external CDN to run. Serving the frontend and API from one origin avoids a separate CORS configuration. Mercury's official public demo supplies the primary visual structure; Blend informs input grouping. Original branding and system fonts replace proprietary assets. Measured source details and the final matching assessment are distinct evidence, documented in the reference research and website handoff.
 
 ## Configuration, notebooks and artifacts
 
@@ -54,6 +83,9 @@ During cross-validation, every fitted step is cloned and fitted on each fold's t
 | --- | --- |
 | `requirements.txt` | Direct library requirements with bounded version ranges. |
 | `requirements-lock.txt` | Exact package versions installed for this experiment. Use Python 3.12 for this frozen environment. |
+| `requirements-web.in`, `requirements-web.txt` | Direct and resolved Linux runtime dependencies for the website image. Model-library versions match the artifact; the runtime omits notebook, test and Streamlit dependencies and uses CPU-only XGBoost. |
+| `Dockerfile` | Builds a Python 3.12 Linux image, installs the runtime, verifies the raw/model binding, copies the website/artifacts and runs as a non-root user. The readiness probe must use the configured `PORT`. A successful recipe review is different from a tested running container. |
+| `.dockerignore` | Leaves the development environment, credentials, Git history, tests, notebooks and research captures out of the image context. The required trusted background data and reports are deliberately included for runtime explanations. |
 | `pytest.ini` | Makes the project importable in tests, sets the test directory and filters the documented feature-name warning. |
 | `.gitignore` | Keeps the virtual environment, caches, logs, credentials and unlicensed-to-redistribute raw CSV out of Git. It does not delete those local files. |
 | `.streamlit/config.toml` | Sets the original navy/teal light theme, upload-size limit and disables Streamlit usage-statistics collection. |
@@ -77,6 +109,8 @@ During cross-validation, every fitted step is cloned and fitted on each fold's t
 | `reports/fairness.csv` | Actual and predicted Gender/Married approval rates, sample sizes, class denominators and group TPR/FPR. |
 | `reports/shap_metadata.json`, `shap_example.json` | Background/summary IDs, explanation settings, additivity error, global rankings and a real worked example. |
 | `reports/run_manifest.json`, `reproduction.json` | Generated full-run outcomes/environment and comparison evidence when those commands are executed. Their existence and status must be inspected before claiming success. |
+| `reports/website_baseline.json` | Records raw/model hashes before the custom website work so the follow-up can verify that inference/UI changes did not alter the experiment. |
+| `reports/website_verification.json` | Records final website/API/browser/container evidence when those checks are actually executed. Read its outcomes and the website handoff rather than inferring completion from source files. |
 | `reports/figures/` | Ten `eda_*.png` plots, actual evaluation curves/confusion matrices, training cost curve, global SHAP and a single-app waterfall. All are generated from code and real observations. |
 
 Generated logs and cached bytecode are execution aids, not research evidence or source code. The virtual environment is installed third-party software, not student-authored code to explain line by line.
@@ -94,13 +128,17 @@ Generated logs and cached bytecode are execution aids, not research evidence or 
 | `docs/05_modeling.md` | Candidate algorithms, search setup, real CV comparison and threshold experiment. |
 | `docs/06_evaluation.md` | Actual holdout results, baseline, errors, policy trade-offs and group audit. |
 | `docs/07_explainability.md` | How to read SHAP, actual setup/example and limits. |
-| `docs/UI_DESIGN.md` | Original interface choices and verified design references. |
+| `docs/UI_DESIGN.md` | Original Streamlit interface choices and references, retained as historical design context. |
+| `docs/WEBSITE_PLAN.md` | Custom website scope, architecture and verification contract. |
+| `docs/WEBSITE_REFERENCES.md` | Twelve primary UI references, inspected source captures, measured Mercury values and a matching matrix. |
+| `docs/DEPLOYMENT.md` | Current localhost setup and the Linux container path for later deployment, with runtime/data boundaries. |
+| `docs/WEBSITE_HANDOFF.md` | Latest custom website completion and verification evidence; distinguishes executed checks from remaining limits. |
 | `docs/ASSUMPTIONS.md` | Decisions made where source metadata or requirements were ambiguous. |
 | `docs/PROGRESS.md` | Per-phase work and verification history. |
 | `docs/BLOCKERS.md` | Failures, attempted operations and recoveries. |
 | `docs/STATUS_UPDATE.md` | The requested eight-section college-project status report. |
 | `docs/VIVA_NOTES.md` | This file: file explanations, formulas, demonstration and questions. |
-| `docs/MORNING_SUMMARY.md` | Final handoff with what actually completed, failed and needs attention first. |
+| `docs/MORNING_SUMMARY.md` | Original ML/Streamlit build handoff; use the newer website handoff for the custom interface. |
 
 ## Feature formulas and choices
 
@@ -197,17 +235,19 @@ No. It compares actual and predicted approval rates and error rates by Gender an
 
 ### 20. How do you demonstrate reproducibility and what would you improve next?
 
-Run the full pipeline from unchanged raw data, execute all notebook cells, run pytest, and use `--verify-reproduction` to compare model choices, parameters, metrics and holdout scores with an independent refit. For real use, collect contemporary permissioned data with repayment outcomes, validate externally, justify costs and calibration, quantify subgroup uncertainty and involve bank reviewers. I would not repeatedly tune against this examined holdout.
+Run the full pipeline from unchanged raw data, execute all notebook cells, run pytest, and use `--verify-reproduction` to compare model choices, parameters, metrics and holdout scores with an independent refit. The website follow-up reuses that frozen experiment; verify raw/model hashes, API agreement and live single/batch/SHAP/navigation behavior separately. A local container check is different from cloud publication. For real use, collect contemporary permissioned data with repayment outcomes, validate externally, justify costs and calibration, quantify subgroup uncertainty and involve bank reviewers. I would not repeatedly tune against this examined holdout.
 
 ## A practical viva demonstration
 
-1. Open the README results and explain standard versus failed experimental thresholds before showing the app.
+1. Start `python -m web`, open http://127.0.0.1:8000, and explain standard versus failed experimental thresholds before quoting results.
 2. Show the exact raw source/checksum and the 491/123 split manifest.
 3. Open the notebook's training-only figures and its calculated Key Insights.
 4. Show the CV comparison and explain why F1 selected the shallow tree although another candidate had higher ROC-AUC.
-5. Enter an explicitly identified demonstration application or a known dataset row, inspect the score/threshold and explain the SHAP baseline/contributions.
-6. Show a batch result, the held-out confusion matrix, the group audit, and fresh verification evidence in the morning summary.
+5. Open New assessment, load an explicitly labeled real public example or enter clearly hypothetical inputs, then inspect the score/threshold and SHAP baseline/contributions.
+6. Show a real batch result, Model evidence, the held-out confusion matrix and group audit. Explain the reference-led UI and read the final execution evidence in the website handoff.
 
 Never describe hypothetical form inputs as newly collected bank observations or treat a UI launch as evidence that all prediction paths passed. Read final execution evidence and limitations together.
 
-Optional `tests/browser_live.py` opens the running app with Playwright and uses one real public dataset row to check displayed scores, SHAP, CSV upload, evidence and mobile overflow. It is separate from pytest so the app needs no browser dependency; use the transient tool command in the README.
+Optional `tests/website_browser_live.py` checks the custom website at port 8000, or a running container supplied through `--url`. The legacy `tests/browser_live.py` checks the original Streamlit interface at port 8501. Both are separate from pytest so the application needs no browser dependency. Final passing counts and unperformed checks belong in the relevant handoff, not in an assumption based on the scripts' presence.
+
+`tests/website_state_live.py` delays genuine API responses to check reset, overlapping-request and keyboard-focus regressions. `tests/website_accessibility_live.py` runs the separately downloaded axe engine on rendered pages. `tests/verify_website.py` combines actual pytest/browser/audit reports, model/raw checksums and the specifically named verification container's runtime/source checks. These are verification tools, not application dependencies or replacement model data. `docs/WEBSITE_COMPARISON.html` displays the actual reference and implemented screenshots side by side.

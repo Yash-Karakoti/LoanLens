@@ -17,3 +17,10 @@
 - The fitted tree's leaf-score support tops out at 0.6394436519258202, below the training-selected 0.76 cost threshold. Training OOF cost tuning itself chose reject-all under the assumed 5:1 costs. Retain the saved cost experiment unchanged. The UI defaults to the conventional, pre-existing 0.50 policy and exposes 0.76 only as a labeled failed scenario, by passing a copy of the artifact with an explicit threshold. This deployment choice follows the model's structural score support, not a search on holdout outcomes. Both policies' held-out results remain visible.
 - The cost grid includes 0.00–1.00 by 0.01 plus the next floating-point value above 1.0 to represent reject-all even when a classifier returns exactly 1.0. This edge-case fix does not alter the selected 0.76 result.
 - SMOTENC interpolates numeric engineered features, which may no longer exactly satisfy their original financial formulas. It is a comparison experiment, not additional observed applications or a source of EDA data.
+
+## Custom website follow-up
+
+- The custom website is the primary localhost interface; Streamlit remains available for the original notebook-oriented demonstration. The trained model and both threshold policies are preserved.
+- Use FastAPI with a same-origin, buildless HTML/CSS/JavaScript frontend. A separate React toolchain is unnecessary for these six pages and would make setup and the viva explanation more complex.
+- Mercury's official public interactive demo supplies the primary visual reference. Follow its layout, spacing and surface hierarchy with original LoanLens content and assets. The design is an adaptation, not Mercury affiliation or a claim of pixel-identical proprietary typography.
+- No authentication, durable applicant storage or cloud publication is added. Website input remains in memory. Deployment instructions distinguish a publicly reachable educational demo from real lending use.

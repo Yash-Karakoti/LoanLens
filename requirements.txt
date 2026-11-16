@@ -12,3 +12,5 @@ streamlit>=1.50,<2
 pytest>=8,<10
 jupyter>=1.1,<2
 nbclient>=0.10,<0.11
+fastapi>=0.115,<1
+uvicorn>=0.34,<1

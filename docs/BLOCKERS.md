@@ -17,3 +17,9 @@ The saved 0.76 training OOF cost threshold rejects all training OOF applicants u
 ## Verification harness recoveries
 
 The first live Playwright check timed out on a dropdown option selector. Keyboard selection matched the current Streamlit widget, and the complete check passed. A Windows console print of an emoji needed UTF-8; only diagnostic output was affected. A redirected PowerShell pipeline command reported an error on non-fatal notebook stderr despite its internal passed manifest. A further complete rebuild with explicit native LASTEXITCODE capture returned 0 and reproduced all results. Three upstream SHAP deprecation warnings remain in pytest output; all 43 tests passed.
+
+## Custom website verification - corrected findings
+- Fixed container health PORT handling, batch JSON precision, delayed-example invalidation, overlapping batch cleanup, evidence-toggle focus and tinted-text contrast. Regression and accessibility checks now pass.
+- Added request-body schemas for bounded JSON/CSV API documentation and verified them.
+- Replaced a PowerShell inline collector that failed to parse with a standard Python verification script.
+- Final website suite: 62 passed; four upstream SHAP/Starlette warnings remain visible. No unresolved functional blocker in the checked website scope.

@@ -1,0 +1,15 @@
+.git
+.venv
+.pytest_cache
+**/__pycache__
+**/*.pyc
+**/*.log
+.env
+.kaggle
+.streamlit
+notebooks
+tests
+docs
+reports/reproduction_before.json
+reports/figures/app_*.png
+reports/figures/website_*.png

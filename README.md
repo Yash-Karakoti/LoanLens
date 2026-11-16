@@ -2,20 +2,43 @@
 
 ## Build an Explainable Loan Screening Assistant
 
-**LoanLens** is an intermediate college major project that compares five machine-learning algorithms, explains their predictions with SHAP, and provides a Streamlit application for single and batch screening.
+**LoanLens** is an intermediate college major project that compares five machine-learning algorithms, explains their predictions with SHAP, and provides a custom localhost website for single and batch screening. A same-origin FastAPI service runs the actual Python model; the frontend uses native HTML, CSS and JavaScript modules.
 
 It learns **historical approval decisions**, not repayment or default outcomes. The goal is to support a human reviewer's shortlist. This dataset cannot validate reduced non-performing assets, real bank savings, or production lending suitability.
 
-## Start the existing local project
+## Start the website
 
 Run these commands in Windows PowerShell:
 
 ```powershell
 Set-Location 'D:\Koding\Housing Loan Approval Prediction'
+.\.venv\Scripts\python.exe -m web
+```
+
+Open **http://127.0.0.1:8000**. No frontend build, Node runtime, API key or external CDN is needed. The website has six refreshable routes:
+
+| Page | Route | Purpose |
+| --- | --- | --- |
+| Overview | `/` | Actual dataset counts, held-out performance and model comparison |
+| New assessment | `/assessment` | Applicant input, real example, model suggestion and SHAP |
+| Batch screening | `/batch` | Bounded CSV upload, result preview and safe download |
+| Model evidence | `/evidence` | Model comparison, threshold trade-offs and demographic audits |
+| Methodology | `/methodology` | Pipeline, data assumptions and limitations |
+| Design & references | `/references` | Primary design sources and their adaptation |
+
+Uploads and applicant details are processed in memory; the website has no login or durable applicant history. The model is frozen: website requests do not retrain it or change the saved threshold. See [the website handoff](docs/WEBSITE_HANDOFF.md) for final verification evidence and [deployment instructions](docs/DEPLOYMENT.md) for setup and the Linux container path.
+
+The original Streamlit interface remains an alternative at port 8501:
+
+```powershell
 .\.venv\Scripts\python.exe -m streamlit run app/app.py --server.headless true --server.address 127.0.0.1
 ```
 
-Open the local URL printed by Streamlit. The application contains **Single application**, **Batch screening**, and **Model evidence** tabs. All application data are processed in memory; the app does not save uploads.
+## Reference-led design
+
+The primary reference is [Mercury's official public dashboard demo](https://demo.mercury.com/dashboard), inspected as a live application with screenshots and measured styles. LoanLens follows its narrow pale navigation rail, compact header/actions, restrained page titles, white bordered panels and ledger tables. Blend's banker workflow informs the grouping of application fields. The website uses original LoanLens content, icons and a system-font stack; it does not copy Mercury's proprietary fonts, branding or financial data.
+
+[The reference research](docs/WEBSITE_REFERENCES.md) records twelve primary sources, exact provenance, measured values and a visual matching matrix. The final rendered comparison and its limits belong in the website handoff; this is an adaptation, not a claim of pixel-identical typography or vendor affiliation.
 
 ## Setup on a fresh machine
 
@@ -36,7 +59,9 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
 ```
 
-Use one setup method. Activating the environment is optional because commands below explicitly use its interpreter. `requirements.txt` describes direct dependency ranges; `requirements-lock.txt` freezes the packages actually installed for this run.
+Use one setup method. Activating the environment is optional because commands below explicitly use its interpreter. `requirements.txt` describes direct dependency ranges; `requirements-lock.txt` freezes the development environment, including FastAPI and uvicorn. The separate `requirements-web.in` / `requirements-web.txt` runtime set targets the Linux container without notebook, pytest, Streamlit or Windows-specific dependencies.
+
+If cloning without the ignored raw CSV, run `.\.venv\Scripts\python.exe -m src.download_data` before loading public training examples, calculating SHAP or building the container. The source loader verifies the recorded checksum and does not overwrite existing raw data.
 
 ## Reproduce the complete experiment
 
@@ -112,23 +137,26 @@ Batch CSVs must have the input column names shown by the downloadable blank temp
 | --- | --- |
 | `data/raw/` | Immutable local CSV and its source/checksum record |
 | `data/processed/` | Split manifest and real training OOF probabilities |
-| `src/` | Download, reporting, preprocessing, training, evaluation, prediction, SHAP and runner modules |
+| `src/` | Download, reporting, preprocessing, training, evaluation, prediction, SHAP, shared interface helpers and runner modules |
 | `notebooks/01_eda.ipynb` | Executable training-only EDA with generated insights |
 | `models/` | Trusted fitted pipeline artifact and readable metadata |
-| `app/app.py` | Streamlit single/batch/evidence interface |
+| `web/server.py`, `web/__main__.py` | Same-origin model API, explicit website routes and configurable local/container entry point |
+| `web/static/` | Custom responsive website shell, page modules, styles and original mark |
+| `app/app.py` | Original Streamlit alternative using the same prediction and interface helpers |
+| `Dockerfile`, `requirements-web.txt` | Non-root Linux runtime packaging for later deployment |
 | `reports/` | Code-generated metrics, comparisons, audits, errors and figures |
 | `tests/` | Data integrity, preprocessing, CV boundaries, prediction, evaluation, SHAP and app checks |
 | `docs/` | Research, assumptions, phase notes, progress, viva notes and morning summary |
 
-Start with [MORNING_SUMMARY.md](docs/MORNING_SUMMARY.md), [STATUS_UPDATE.md](docs/STATUS_UPDATE.md), and [VIVA_NOTES.md](docs/VIVA_NOTES.md). [PROGRESS.md](docs/PROGRESS.md) records phase verification and commits; [BLOCKERS.md](docs/BLOCKERS.md) records failures and recoveries. [Research notes](docs/00_research.md) contain inspected GitHub references and UI sources; no third-party application code was copied.
+Start with [WEBSITE_HANDOFF.md](docs/WEBSITE_HANDOFF.md), [STATUS_UPDATE.md](docs/STATUS_UPDATE.md), and [VIVA_NOTES.md](docs/VIVA_NOTES.md). [MORNING_SUMMARY.md](docs/MORNING_SUMMARY.md) preserves the original ML/Streamlit build handoff. [PROGRESS.md](docs/PROGRESS.md) records phase verification and commits; [BLOCKERS.md](docs/BLOCKERS.md) records failures and recoveries. [Research notes](docs/00_research.md) contain inspected GitHub references and [website reference research](docs/WEBSITE_REFERENCES.md) covers the custom design. No third-party application code was copied.
 
-Final test, server and reproduction evidence should be read from the morning summary. A trained local app is not a cloud deployment, a fairness certification, or a production lending system.
+The ML reproduction evidence is in the original morning summary. Final website/API/browser/container outcomes are recorded separately in the website handoff and its generated verification report. Do not infer that every deployment check passed merely because a recipe or test script exists. No cloud publication or production lending suitability is claimed.
 
 Optional live browser verification uses a separate Playwright tool environment, not an app dependency:
 
 ```powershell
 uv tool run --from playwright playwright install chromium
-uv tool run --from playwright python tests/browser_live.py
+uv tool run --from playwright python tests/website_browser_live.py
 ```
 
-It checks a real held-out applicant against saved scores, SHAP, CSV upload, evidence, and desktop/mobile layouts. Evidence is in `reports/browser_check.json` and `reports/figures/app_*.png`.
+The custom website check defaults to port 8000 and supports `--url http://127.0.0.1:8001` for a running container. It checks actual model output and SHAP, CSV processing, working routes and responsive layouts. It does not substitute for external bank validation or a formal accessibility certification. The legacy `tests/browser_live.py` remains the separate Streamlit check at port 8501.

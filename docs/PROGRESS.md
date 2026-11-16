@@ -71,3 +71,32 @@
 - Machine evidence saved in reports/verification.json, reproduction.json, run_manifest.json, pytest_results.xml and browser_check.json.
 - Independent re-review found all five initial findings addressed. External bank validation, formal accessibility audit, cloud publication and a Python-version matrix were outside this local educational build.
 
+
+## Website follow-up — research and shared interface verified
+- User requested a complete custom localhost website with close reference matching and later deployment support.
+- Inspected 12 primary UI references; measured Mercury's official live dashboard and saved eight reference captures. Design contract in docs/WEBSITE_REFERENCES.md.
+- Extracted shared CSV upload/export and tree-score checks to src/interface.py. Legacy Streamlit regression checks: 8 passed after extraction.
+- Added FastAPI/uvicorn to the frozen environment; model and raw-data SHA-256 baselines recorded. Existing trained model is reused without refitting.
+
+
+## Website follow-up — model API verified
+- Added explicit website routes and same-origin FastAPI prediction, real SHAP, batch, evidence, template and allowlisted-figure endpoints.
+- API checks: 18 passed, including actual model agreement, probability additivity, malformed inputs, streamed body limits and single/batch numerical precision.
+- Independent review found and fixed batch JSON precision and container health-check PORT handling. Saved model and raw bytes are unchanged.
+
+
+## Website follow-up — complete frontend verified
+- Delivered six custom website routes with actual prediction/SHAP, CSV screening/export, model evidence, methodology and references.
+- Measured browser match to Mercury: 220px rail, 968px content, 472px first panel, 28px/36px title, #5266eb primary action, 12px panels and 8px active navigation.
+- Native Chromium passed every functional flow and 30 responsive checks across six routes at 320, 390, 768, 1024 and 1440px; zero uncaught JavaScript errors.
+- Three delayed-real-response regressions initially reproduced, then passed after fixing late-example invalidation, overlapping batch cleanup and policy-toggle keyboard focus.
+- axe-core 4.14.0 found contrast issues in switch/badge text; fixed them. Final six-route automated WCAG A/AA check reports zero violations; formal assistive-technology auditing is not claimed.
+- Saved actual screenshots and a side-by-side reference comparison. Source formatting and JavaScript syntax checks use development tooling only; the app needs no Node runtime.
+
+
+## Website follow-up - deployment and final handoff verified
+- Final full suite: 62 passed, zero failures/errors/skips; 49.43 seconds. API documentation now includes editable bounded JSON/CSV request schemas.
+- Linux amd64 image built and passed full browser flows plus 30 responsive checks. Non-root UID 10001, read-only filesystem and health on PORT 8080 verified.
+- All 15 website source files in the image matched local bytes. Raw/model hashes remained unchanged; native/container score difference was 0.0.
+- Automated axe-core 4.14.0 checked six routes with WCAG 2 A/AA and 2.1 A/AA tags: zero violations. Three asynchronous/focus regression checks passed.
+- Saved combined reports, screenshots, reference board, deployment guide and WEBSITE_HANDOFF. Native localhost site remains on port 8000. Temporary verification container is stopped after evidence collection; no cloud publication performed.

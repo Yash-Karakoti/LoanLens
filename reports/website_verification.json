@@ -1,0 +1,409 @@
+{
+  "passed": true,
+  "pytest": {
+    "tests": 62,
+    "failures_and_errors": 0,
+    "skipped": 0
+  },
+  "native_browser": {
+    "passed": true,
+    "base_url": "http://127.0.0.1:8000",
+    "real_application_id": "LP001535",
+    "checks": [
+      "reference tokens: 220px rail, 28/36 title, #5266eb action, 12px panels, 8px nav, white canvas",
+      "labeled real training example: rendered score agrees with model API; additive SHAP PNG and reasons",
+      "cost policy failure is visible; policy changes and invalid submissions clear stale results",
+      "actual CSV upload, real result table, blank template and prediction export",
+      "duplicate-header CSV rejected with visible error and no stale downloadable result",
+      "evidence policy controls render actual default and failed-cost confusion counts",
+      "browser back/forward and direct route refresh preserve working navigation",
+      "mobile navigation opens as a focus-managed dialog; Escape restores focus"
+    ],
+    "design_measurements": {
+      "sidebar_width": 220,
+      "title_size": "28px",
+      "title_line_height": "36px",
+      "primary_color": "rgb(82, 102, 235)",
+      "panel_radius": "12px",
+      "panel_border": "rgba(112, 115, 147, 0.13)",
+      "main_background": "rgb(255, 255, 255)",
+      "active_nav_radius": "8px",
+      "content_width": 968,
+      "first_panel_width": 472
+    },
+    "responsive_checks": [
+      {
+        "width": 320,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/references",
+        "horizontal_overflow": false
+      }
+    ],
+    "uncaught_javascript_errors": []
+  },
+  "container_browser": {
+    "passed": true,
+    "base_url": "http://127.0.0.1:8001",
+    "real_application_id": "LP001535",
+    "checks": [
+      "reference tokens: 220px rail, 28/36 title, #5266eb action, 12px panels, 8px nav, white canvas",
+      "labeled real training example: rendered score agrees with model API; additive SHAP PNG and reasons",
+      "cost policy failure is visible; policy changes and invalid submissions clear stale results",
+      "actual CSV upload, real result table, blank template and prediction export",
+      "duplicate-header CSV rejected with visible error and no stale downloadable result",
+      "evidence policy controls render actual default and failed-cost confusion counts",
+      "browser back/forward and direct route refresh preserve working navigation",
+      "mobile navigation opens as a focus-managed dialog; Escape restores focus"
+    ],
+    "design_measurements": {
+      "sidebar_width": 220,
+      "title_size": "28px",
+      "title_line_height": "36px",
+      "primary_color": "rgb(82, 102, 235)",
+      "panel_radius": "12px",
+      "panel_border": "rgba(112, 115, 147, 0.13)",
+      "main_background": "rgb(255, 255, 255)",
+      "active_nav_radius": "8px",
+      "content_width": 968,
+      "first_panel_width": 472
+    },
+    "responsive_checks": [
+      {
+        "width": 320,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 320,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 768,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1024,
+        "route": "/references",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/assessment",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/batch",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/evidence",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/methodology",
+        "horizontal_overflow": false
+      },
+      {
+        "width": 1440,
+        "route": "/references",
+        "horizontal_overflow": false
+      }
+    ],
+    "uncaught_javascript_errors": []
+  },
+  "async_state_regressions": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "late_example_reset",
+        "passed": true
+      },
+      {
+        "name": "overlapping_batch_state",
+        "passed": true
+      },
+      {
+        "name": "keyboard_evidence_policy_focus",
+        "passed": true
+      }
+    ],
+    "responses": "Genuine API responses delayed at the browser boundary; no replacement model data"
+  },
+  "accessibility": {
+    "engine_version": "4.14.0",
+    "routes": 6,
+    "violations": 0,
+    "limit": "Automated axe checks do not replace a formal accessibility or assistive-technology audit."
+  },
+  "container": {
+    "running_during_verification": true,
+    "image_id": "sha256:0a1e652f787f36e44f565615d896d5bd50e2fc0eece7df7d3e8daf9979e27094",
+    "runtime_uid": 10001,
+    "read_only_filesystem": true,
+    "health": "healthy",
+    "port_environment_tested": 8080,
+    "matching_source_files": 15,
+    "python": "3.12.16"
+  },
+  "native_python": "3.12.13 (main, May  4 2026, 21:19:41) [MSC v.1944 64 bit (AMD64)]",
+  "raw_sha256": "8c2cc67a13279ec746b15f76f14e8503154274ef7f221d2437033b4407c80ca8",
+  "model_sha256": "fdafd9876d42846c96fdb9c7e52063c81cfa1977718069290b4a16743218c771",
+  "raw_and_model_unchanged": true,
+  "cross_platform_probability_difference": 0.0,
+  "cloud_publication_performed": false,
+  "verified_utc": "2026-11-16T00:12:14.213950+00:00"
+}

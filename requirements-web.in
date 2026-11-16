@@ -1,0 +1,12 @@
+# Runtime only; versions match the fitted model environment.
+fastapi==0.163.1
+uvicorn==0.54.0
+pandas==2.3.3
+numpy==2.5.5
+scikit-learn==1.7.2
+imbalanced-learn==0.14.2
+xgboost-cpu==3.4.1
+lightgbm==4.7.0
+shap==0.50.0
+joblib==1.6.0
+matplotlib==3.11.2
