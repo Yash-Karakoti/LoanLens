@@ -22,7 +22,7 @@ from src.common import ROOT, file_hash, split_data, write_json
 from src.predict import load_artifact
 
 TOLERANCE = 1e-12
-PHASES = ["download_data", "dataset_report", "eda", "train", "evaluate", "explain"]
+PHASES = ["download_data", "dataset_report", "eda", "train", "evaluate", "explain", "calibration", "learning_curves"]
 
 
 def snapshot_results() -> dict[str, Any]:

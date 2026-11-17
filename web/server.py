@@ -40,6 +40,7 @@ FIGURE_NAMES = {
     "eda_04_credit_history.png", "eda_05_property_area.png", "eda_06_education.png",
     "eda_07_married.png", "eda_08_self_employed.png", "eda_09_income_boxplots.png",
     "eda_10_correlations.png",
+    "calibration_curve.png", "learning_curves.png",
 }
 
 app = FastAPI(title="LoanLens screening API", version="1.0.0", docs_url="/api/docs", openapi_url="/api/openapi.json", redoc_url=None)

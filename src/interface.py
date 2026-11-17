@@ -51,3 +51,21 @@ def maximum_tree_approval_score(artifact: dict[str, Any]) -> float | None:
     leaf_weights = model.tree_.value[model.tree_.children_left == -1, 0, :]
     approval_column = list(model.classes_).index(1)
     return float((leaf_weights[:, approval_column] / leaf_weights.sum(axis=1)).max())
+
+
+def emi_calculation(principal_thousands: float, term_months: float, annual_rate_pct: float = 9.0) -> dict:
+    """Calculate monthly EMI and return breakdown dict."""
+    import numpy as np
+    principal = principal_thousands * 1000
+    monthly_rate = annual_rate_pct / 100 / 12
+    if monthly_rate == 0:
+        emi = principal / term_months
+    else:
+        emi = principal * monthly_rate / (1 - np.power(1 + monthly_rate, -term_months))
+    total_payment = emi * term_months
+    return {
+        "monthly_emi": round(float(emi), 2),
+        "total_payment": round(float(total_payment), 2),
+        "total_interest": round(float(total_payment - principal), 2),
+        "principal": round(float(principal), 2),
+    }

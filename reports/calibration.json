@@ -1,0 +1,19 @@
+{
+  "brier_before": 0.1442249447155676,
+  "brier_after": 0.10787409353614552,
+  "improvement_pct": 25.2043,
+  "confidence_distribution": {
+    "High": {
+      "count": 115,
+      "percentage": 93.5
+    },
+    "Medium": {
+      "count": 8,
+      "percentage": 6.5
+    },
+    "Low": {
+      "count": 0,
+      "percentage": 0.0
+    }
+  }
+}
